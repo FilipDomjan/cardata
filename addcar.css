@@ -8,116 +8,145 @@
     src: url(fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf);
 }
 
-body{
+body,html{
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-    overflow-x: hidden;
-    background-image: url(img/agera.jpg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    height: 100%;
+    background-color: #dadada;
+}
+
+/* CSS For the navbar */
+
+.navbar{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.navbar img{
+    float: left;
+    color: rgb(255, 255, 255);
+    margin-left: 20px;
+    margin-top: 18px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.links{
+    float: right;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.links a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    float: left;
+    padding: 35px 25px;
+    background-color: transparent;
+    transition: all 0.1s;
+    box-sizing: border-box;
+}
+
+.links a:hover{
+    background-color: rgb(124, 124, 124);
+}
+
+.login{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.login i{
+    padding-right: 5px;
+}
+
+.logout{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.logout i{
+    padding-right: 5px;
+}
+
+.links .active{
+    box-shadow:inset 0px -3px 0px 0px orangered;
+    cursor: pointer;
 }
 
 
 #main{
-    width: 100%;
-    position: relative;
-}
-
-.main-content h1{
-    font-size: 60px;
-    color: white;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-}
-
-.form a{
-    font-size: 23px;
-    text-decoration: none;
-    color: black;
-    float: left;
-    margin-top: 10px;
-    color: white;
-}
-
-.main-form{
-    width: 100%;
-    height: 100%;
-    margin-top: 200px;
-}
-
-.form form{
-    width: 700px;
+    width: 900px;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 5px;
-    background-color: white;
+    transition: all 0.3s;
+    position: relative;
+    top: 108px;
 }
 
+.sidebar{
+    width: 70px;
+    position: absolute;
+    top: 0px;
+    left: -80px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 2px 0px #aaaaaa;
+    border-radius: 5px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    transition: all 0.3s;
+}
 
-.form .row{
+.sidebar a{
+    padding: 20px 24px;
+    text-decoration: none;
+    color: rgb(65, 65, 65);
+    font-size: 20px;
     display: block;
-    padding: 10px;
+    transition: all 0.15s;
 }
 
-.form form input{
-    box-sizing: border-box;
+.sidebar span{
+    padding-left: 30px;
+}
+
+.sidebar a:hover{
+    background-color: #e7e7e7;
+}
+
+.sidebar .fa-circle-plus{
+    color: orangered;
+}
+
+.row{
     width: 100%;
-    height: 30px;
-    outline: none;
-    border: 1px solid rgb(200, 200, 200);
-    border-radius: 5px;
+    margin-bottom: 35px;
 }
 
-.form .row-model {
+.row input, .row select{
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    font-size: 20px;
+    color: black;
+    background-color: white;
+    border: 1px solid gray;
+    outline: none;
+    box-sizing: border-box;
+    vertical-align: top;
+    padding-left: 5px;
+}
+
+.row label{
+    font-size: 22px;
+}
+
+.row-model{
     width: 49.7%;
     display: inline-block;
-}
-
-.row-model select{
-    width: 100%;
-    height: 30px;
-    outline: none;
-    border: 1px solid rgb(200, 200, 200);
-    border-radius: 5px;
-}
-
-
-.form .row-ftd{
-    width: 32.9%;
-    display: inline-block;
-}
-
-.row-ftd #ftd{
-    width: 100%;
-    height: 30px;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid rgb(200, 200, 200);
-}
-
-.row-cth{
-    width: 32.9%;
-    display: inline-block;
-}
-
-.row-cth #cth{
-    width: 100%;
-    height: 30px;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid rgb(200, 200, 200);
-}
-
-.row-cth #engcap{
-    width: 100%;
-    height: 30px;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid rgb(200, 200, 200);
 }
 
 .row-tcy{
@@ -125,64 +154,31 @@ body{
     display: inline-block;
 }
 
-.row-tcy #tcy{
-    width: 100%;
-    height: 30px;
-    border: 1px solid rgb(200, 200, 200);
-    outline: none;
-    border-radius: 5px;
+
+.row-cth{
+    width: 32.9%;
+    display: inline-block;
 }
 
-
-
-.row select{
-    cursor: pointer;
+.row-ftd{
+    width: 32.9%;
+    display: inline-block;
 }
 
 #submit{
-    float: left;
-    width: 100px;
-    height: 35px;
+    width: 160px;
+    border-radius: 25px;
     cursor: pointer;
     background-color: orangered;
-    border-radius: 5px;
-    box-shadow: 0px 2px 2px #aaaaaa;
-    font-size: 16px;
     color: white;
-    border:none;
-    outline: none;
+    border: none;
     transition: all 0.2s;
-    font-family: 'Source Sans Pro SemiBold';
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
 }
 
 #submit:hover{
-    background-color: rgb(224, 60, 0);
-}
-
-.notice{
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-
-.car-upload-status{
-    padding: 0;
-    margin: 0;
-    padding-top: 10px;
-}
-
-#writeError{
-    padding: 0;
-    margin: 0;
-    margin-top: 10px;
-    color: black;
-}
-
-#writeError b{
-    color: red;
-}
-
-.clear{
-    clear: both;
+    background-color: rgb(216, 58, 0);
 }
