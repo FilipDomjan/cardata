@@ -35,7 +35,7 @@
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='index.php'>Home</a>";
-                    echo "<a href='home.php' class='active'>My CarData</a>";
+                    echo "<a href='dashboard.php' class='active'>My CarData</a>";
                     echo "<a href='#'>Contact</a>";
                     echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
                     echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
@@ -54,8 +54,7 @@
     <div id="main">
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
-                <a href="index.php"><i class="fa-solid fa-house"></i><span>Home</span></a>
-                <a href="home.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
+                <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
                 <a href="mycars.php?"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
                 <a href="#"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
                 <a href="addcar.php"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>
@@ -131,11 +130,25 @@
                     <a id="delete-from-table"><i class='fa-solid fa-circle-xmark'></i></a>
                     <a href="addmod.php"><i class="fa-solid fa-gear"></i></a>
                 </div>
-                <!-- Table search, not configured yet -->
+                <!-- Table search, partly functional -->
                 <div class="search">
                     <form action="" method="POST">
-                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                        <input type="text" name="search-table" id="search" placeholder="Search table">
+                        <div class="search-items">
+                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <input type="text" name="search-table" id="search" placeholder="Search table">
+                        </div>
+                        <div class="search-items">
+                            <?php
+                                if(isset($_POST["search-table"])){
+                                    if(strlen($_POST["search-table"]) > 0){
+                                        echo "<input type='submit' name='submit' id='submit' value='Reset'>";
+                                    }
+                                    else{
+                                        null;
+                                    }
+                                }
+                            ?>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -144,7 +157,7 @@
                 <thead>
                     <tr class="top-row">
                         <td class='tl'><b>Car name</b></td>
-                        <td><b>Repair type</b></td>
+                        <td><b>Work type</b></td>
                         <td><b>Description</b></td>
                         <td><b>Milage</b></td>
                         <td><b>Price</b></td>
@@ -155,13 +168,30 @@
                     echo "<tbody>";
                     // Get the car id from the url parameter
                     $carid = $_GET["carid"];
+                    $search_value = "";
+
+                    if(isset($_POST["search-table"]))
+                    {
+                        $search_value = $_POST["search-table"];
+                    }
+                    if(isset($_POST["submit"])){
+                        $search_value = "";
+                    }
                     
                     // If the car id is 0, then show mods from all cars
                     if($carid == "0"){
                         
+                        if(strlen($search_value) > 0){
+                            $query3 = "SELECT mods.id AS mod_id, carid, repair_type, description, milage, price, unit, done_at FROM mods 
+                            JOIN cars ON cars.id = mods.carid WHERE cars.manufacturer LIKE '%$search_value%' OR cars.model LIKE '%$search_value%' OR cars.model_year LIKE '%$search_value%'
+                            OR repair_type LIKE '%$search_value%' OR description LIKE '%$search_value%' OR milage LIKE '%$search_value%' OR price LIKE '%$search_value%'
+                            OR done_at LIKE '%$search_value%'";
+                            $result3 = mysqli_query($userdb, $query3);
+                        }else{
+                            $query3 = "SELECT mods.id AS mod_id, carid, repair_type, description, milage, price, unit, done_at FROM mods ORDER BY done_at DESC";
+                            $result3 = mysqli_query($userdb, $query3);
+                        }
                         // Get all the mods from the database
-                        $query3 = "SELECT mods.id AS mod_id, carid, repair_type, description, milage, price, unit, done_at FROM mods ORDER BY done_at DESC";
-                        $result3 = mysqli_query($userdb, $query3);
 
                         // If there are no mods detected show a message
                         if(mysqli_num_rows($result3) < 1){
@@ -220,7 +250,6 @@
     
                     }
                     else{
-                        // If carid is not 0 then get mods from the car with said id
                         $query = "SELECT mods.id AS mod_id, carid, repair_type, description, milage, price, unit, done_at FROM mods WHERE carid=$carid ORDER BY done_at DESC";
                         $result = mysqli_query($userdb, $query);
                         

@@ -222,7 +222,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='../index.php'>Home</a>";
-                    echo "<a href='home.php'>My CarData</a>";
+                    echo "<a href='dashboard.php'>My CarData</a>";
                     echo "<a href='#'>Contact</a>";
                     echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
                     echo "<a href='logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";

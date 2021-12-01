@@ -31,7 +31,7 @@
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='index.php'>Home</a>";
-                    echo "<a href='home.php' class='active'>My CarData</a>";
+                    echo "<a href='dashboard.php' class='active'>My CarData</a>";
                     echo "<a href='#'>Contact</a>";
                     echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
                     echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
@@ -48,8 +48,7 @@
     <div id="main">
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
-                <a href="index.php"><i class="fa-solid fa-house"></i><span>Home</span></a>
-                <a href="home.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
+                <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
                 <a href="mycars.php"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
                 <a href="carmods.php?carid=0"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
                 <a href="#"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>

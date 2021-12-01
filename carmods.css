@@ -224,17 +224,38 @@ body,html{
 
 .search{
     float:right;
+}
+
+.search-items{
     position: relative;
+    display: inline-block;
 }
 
 .search form input{
-    height: 30px;
-    width: 150px;
-    border-radius: 18px;
+    height: 35px;
+    width: 170px;
+    border-radius: 20px;
     border: 1px solid gray;
     outline: none;
     padding-left: 5px;
     padding-right: 35px;
+    box-sizing: border-box
+}
+
+#submit{
+    width: 60px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+    background-color: orangered;
+    color: white;
+    border: none;
+    transition: all 0.2s;
+}
+
+#submit:hover{
+    background-color: rgb(216, 58, 0);
 }
 
 .search form a{

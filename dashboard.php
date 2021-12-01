@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdn.rawgit.com/moment/moment/2.21.0/min/moment.min.js"></script>
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="fonts/fontawesome/css/all.css">
     <title>CarData | Home</title>
 </head>
@@ -32,7 +32,7 @@
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='index.php'>Home</a>";
-                    echo "<a href='home.php' class='active'>My CarData</a>";
+                    echo "<a href='dashboard.php' class='active'>My CarData</a>";
                     echo "<a href='#'>Contact</a>";
                     echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
                     echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
@@ -51,7 +51,6 @@
     <div id="main">
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
-                <a href="index.php"><i class="fa-solid fa-house"></i><span>Home</span></a>
                 <a href="#"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
                 <a href="mycars.php"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
                 <a href="carmods.php?carid=0"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>

@@ -24,7 +24,7 @@
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a class='active'>Home</a>";
-                    echo "<a href='home.php'>My CarData</a>";
+                    echo "<a href='dashboard.php'>My CarData</a>";
                     echo "<a href='#'>Contact</a>";
                     echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
                     echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
@@ -41,7 +41,7 @@
     <div class="showcase">
         <div class="showcase-container">
             <h1>Only the best<br>for our cars.</h1>
-            <button class="analytics" onclick="location.href='home.php'">Dashboard</button>
+            <button class="analytics" onclick="location.href='dashboard.php'">Dashboard</button>
             <button class="other" onclick="location.href='mycars.php'">My Cars</button>
         </div>
         <div class="scroll-down">
