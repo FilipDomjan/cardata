@@ -19,20 +19,42 @@
     <title>CarData | My Cars</title>
 </head>
 <body>
-    <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
-            <a href="index.php"><i class="fa-solid fa-house"></i><span>Home</span></a>
-            <a href="home.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
-            <a href="#"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
-            <a href="carmods.php?carid=0"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
-            <a href="addcar.php"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>
-            <a><i class="fa-solid fa-user"></i><span><?php echo htmlspecialchars($_SESSION["username"]) ?></span></a>
-            <a href="users/logout.php"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
-    </nav>
+    <div class="navbar">    
+        <img src="img/cardata_logo_white.png" alt="logo">
+        <div class="links">
+            <?php
+                error_reporting(0);
 
+                // Navigation bar items change wether the user is logged in or not
+                // If the user is logged in it will show users username and logout button
+                if($_SESSION["loggedin"] === true){
+                    $username = htmlspecialchars($_SESSION["username"]);
+                    echo "<a href='index.php'>Home</a>";
+                    echo "<a href='home.php' class='active'>My CarData</a>";
+                    echo "<a href='#'>Contact</a>";
+                    echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
+                    echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
+                }
+                // If not show original items
+                else{
+                    echo "<a class='active'>Home</a>";
+                    echo "<a href='#'>Contact</a>";
+                    echo "<a href='users/login.php'>Login</a>";
+                }
+            ?>
+        </div>
+    </div>
     <div id="main">
+        <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+            <div class="sidebar-items">
+                <a href="index.php"><i class="fa-solid fa-house"></i><span>Home</span></a>
+                <a href="home.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
+                <a href="#"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
+                <a href="carmods.php?carid=0"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
+                <a href="addcar.php"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>
+            </div>
+        </nav>
         <div class="main-content">
-            <h1>My Cars</h1>
-            <hr>
             <div class="buttons">
                 <a href="mycars.php?extra=1">Advanced view</a>
                 <a href="mycars.php?extra=0" class="simple-view">Simple view</a>
@@ -230,14 +252,17 @@
     </div>
 
     <script>
+        // Sidebar toggler
         var mini = true;
         function toggleSidebar() {
             if (mini) {
             document.getElementById("mySidebar").style.width = "200px";
+            document.getElementById("mySidebar").style.left = "-210px";
             // document.getElementById("main").style.marginLeft = "210px";
             this.mini = false;
         } else {
             document.getElementById("mySidebar").style.width = "70px";
+            document.getElementById("mySidebar").style.left = "-80px";
             // document.getElementById("main").style.marginLeft = "80px";
             this.mini = true;
         }

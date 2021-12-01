@@ -3,21 +3,93 @@
     src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
 }
 
-body{
+body,html{
     margin: 0;
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
-    overflow-x: hidden;
+    height: 100%;
+    background-color: #dadada;
 }
 
-.sidebar{
-    height: 100%;
-    width: 70px;
+/* CSS For the navbar */
+
+.navbar{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 999;
+}
+
+.navbar img{
+    float: left;
+    color: rgb(255, 255, 255);
+    margin-left: 20px;
+    margin-top: 18px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.links{
+    float: right;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.links a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    float: left;
+    padding: 35px 25px;
+    background-color: transparent;
+    transition: all 0.1s;
+    box-sizing: border-box;
+}
+
+.links a:hover{
+    background-color: rgb(124, 124, 124);
+}
+
+.login{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.login i{
+    padding-right: 5px;
+}
+
+.logout{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.logout i{
+    padding-right: 5px;
+}
+
+.links .active{
+    box-shadow:inset 0px -3px 0px 0px orangered;
+    cursor: pointer;
+}
+
+
+#main{
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s;
+    position: relative;
+    top: 108px;
+}
+
+.sidebar{
+    width: 70px;
+    position: absolute;
+    top: 0px;
+    left: -80px;
     background-color: rgb(255, 255, 255);
-    box-shadow: 2px 0px 5px #aaaaaa;
+    box-shadow: 0px 2px 0px #aaaaaa;
+    border-radius: 5px;
     overflow-x: hidden;
     white-space: nowrap;
     transition: all 0.3s;
@@ -32,10 +104,6 @@ body{
     transition: all 0.15s;
 }
 
-.sidebar .fa-car{
-    color: orangered !important;
-}
-
 .sidebar span{
     padding-left: 30px;
 }
@@ -44,11 +112,8 @@ body{
     background-color: #e7e7e7;
 }
 
-#main{
-    width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    transition: all 0.3s;
+.sidebar .fa-car{
+    color: orangered;
 }
 
 .main-content h1{
@@ -68,6 +133,7 @@ body{
 
 .buttons{
     margin-bottom: 10px;
+    padding-top: 8px;
 }
 
 .buttons a{
@@ -89,8 +155,8 @@ body{
 .mycar-item{
     width: 172px;
     height: 172px;
-    box-shadow: 0px 0px 5px #aaaaaa;
-    background-color: #ffffff;
+    box-shadow: 0px 2px 0px #aaaaaa;
+    background-color: #ffffff !important;
     border-radius: 5px;
     text-align: center;
     position: relative;
@@ -142,7 +208,8 @@ body{
 /* CSS for items in extra mode */
 
 .car-data-container{
-    box-shadow: 0px 0px 5px #aaaaaa;
+    box-shadow: 0px 2px 0px #aaaaaa;
+    background-color: #ffffff !important;
     border-radius: 5px;
     width: 100%;
     margin-top: 10px;
@@ -231,7 +298,7 @@ body{
 .mycar-item-large{
     width: 100%;
     height: 150px;
-    box-shadow: 0px 0px 5px #aaaaaa;
+    box-shadow: 0px 2px 0px #aaaaaa;
     background-color: #ffffff;
     border-radius: 5px;
     text-align: center;
@@ -264,4 +331,27 @@ body{
 
 .clear{
     clear: both;
+}
+
+/* Custom Scrollbar settings */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(77, 77, 77);
+    border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(114, 114, 114);
 }
