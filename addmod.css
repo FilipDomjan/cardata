@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-image: url(img/senna.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.form-container{
+    width: 700px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 140px;
+}
+
+.form-container h1{
+    font-size: 60px;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 10px;
+    color: white;
+}
+
+.form-container a{
+    font-size: 23px;
+    text-decoration: none;
+    color: black;
+    float: left;
+    padding-top: 30px;
+    color: white;
+}
+
+.form-container form{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form-container form .row{
+    display: block;
+    padding: 15px 10px 0px 10px;
+    text-align: left;
+}
+
+.form-container form input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.form-container form label{
+    position: relative;
+    bottom: 5px;
+}
+
+.row-selectors{
+    display: inline-block;
+    width: 49.7%;
+}
+
+.row-selectors select{
+    width: 100%;
+    height: 30px;
+    border:none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    font-size: 15px;
+    padding-left: 2px;
+}
+
+.row input{
+    padding-left: 5px !important;
+}
+
+.row-price{
+    width: 49.7%;
+    display: inline-block;
+}
+
+.row-price select, input{
+    width: 100%;
+    font-size: 15px;
+    padding-left: 2px;
+}
+
+.row-price select{
+    width: 100%;
+    height: 30px;
+    border:none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+}
+
+.row textarea{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    resize: none;
+    font-family: 'Source Sans Pro';
+    font-size: 17px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+#submit{
+    float: left;
+    width: 100px;
+    height: 35px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 10px;
+    background-color: orangered;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px #aaaaaa;
+    font-size: 15px;
+    color: white;
+    border:none;
+    outline: none;
+    transition: all 0.2s;
+    font-family: 'Source Sans Pro SemiBold';
+}
+
+#submit:hover{
+    background-color: rgb(224, 60, 0);
+}
+
+.clear{
+    clear: both;
+}
+
+.row p{
+    padding: 0;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+.go-back{
+    padding-top: 10px !important;
+    padding-bottom: 10px;
+}

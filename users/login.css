@@ -1,0 +1,165 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url(../fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+
+body, html{
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-image: url("../img/squad_2_edited.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* CSS For the navbar */
+
+.navbar{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.navbar img{
+    float: left;
+    color: rgb(255, 255, 255);
+    margin-left: 20px;
+    margin-top: 18px;
+    width: 150px;
+}
+
+.links{
+    float: right;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.links a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    float: left;
+    padding: 35px 25px;
+    background-color: transparent;
+    transition: all 0.1s;
+    box-sizing: border-box;
+}
+
+.links a:hover{
+    background-color: rgb(124, 124, 124);
+}
+
+.login{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.login i{
+    padding-right: 5px;
+}
+
+.logout{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.logout i{
+    padding-right: 5px;
+}
+
+.links .active{
+    box-shadow:inset 0px -3px 0px 0px orangered;
+    cursor: pointer;
+}
+
+.showcase{
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.showcase-img{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.showcase-img img{
+    width: 100%;
+}
+
+.form-container form input{
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: rgba(149, 149, 149, 0.623);
+    outline: none;
+    border-collapse: collapse;
+    border-radius: 6px;
+    padding-left: 40px;
+    padding-top: 3px;
+    box-sizing: border-box;
+    color: white;
+    font-size: 16px;
+}
+
+.form-container form input:-webkit-autofill,
+.form-container form input:-webkit-autofill:hover, 
+.form-container form input:-webkit-autofill:focus, 
+.form-container form input:-webkit-autofill:active{
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+}
+
+.form-container form input::placeholder{
+    color: white;
+}
+
+.form-container form label{
+    color: white;
+    font-size: 18px;
+    position: relative;
+    top: 36px;
+    left: 15px;
+}
+
+.form-container form label i{
+    padding-right: 10px;
+    pointer-events: none;
+}
+
+#submit_btn{
+    padding: 0;
+    margin-top: 35px;
+    background-color: rgba(255, 100, 53, 0.671);
+    color: white;
+    font-size: 22px;
+    font-family: 'Source Sans Pro';
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 25px;
+    float:left
+}
+
+#submit_btn:hover{
+    background-color: rgb(255, 100, 53)
+}
+
+.register{
+    color: white;
+    font-size: 18px;
+    float: right;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.register:hover{
+    text-decoration: underline;
+}

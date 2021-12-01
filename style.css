@@ -1,0 +1,426 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+@keyframes arrow {
+    0%{
+        top: 94%;
+    }
+    20%{
+        top: 96%;
+    }
+    40%{
+        top: 95%;
+    }
+    50%{
+        top: 96%;
+    }
+    90%{
+        top: 96%;
+    }
+    100%{
+        top: 94%;
+    }
+}
+
+html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: rgb(255, 255, 255);
+}
+
+/* CSS For the navbar */
+
+.navbar{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.navbar img{
+    float: left;
+    color: rgb(255, 255, 255);
+    margin-left: 20px;
+    margin-top: 18px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.links{
+    float: right;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.links a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    float: left;
+    padding: 35px 25px;
+    background-color: transparent;
+    transition: all 0.1s;
+    box-sizing: border-box;
+}
+
+.links a:hover{
+    background-color: rgb(124, 124, 124);
+}
+
+.login{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.login i{
+    padding-right: 5px;
+}
+
+.logout{
+    border-left: 1px solid rgb(27, 27, 27);
+}
+
+.logout i{
+    padding-right: 5px;
+}
+
+.links .active{
+    box-shadow:inset 0px -3px 0px 0px orangered;
+    cursor: pointer;
+}
+
+
+/* CSS For the showcase */
+
+.showcase{
+    width: 100%;
+    min-height: 980px;
+    background-image: url("img/amg_gt_bs.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.showcase-container{
+    width: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.showcase-container h1{
+    color: white;
+    font-size: 120px;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+.scroll-down{
+    position: absolute;
+    top: 96%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: arrow infinite 4s;
+}
+
+.scroll-down i{
+    font-size: 28px;
+    color: orangered;
+}
+
+/* Style the buttons with uni style */
+
+.showcase-container button{
+    width: 170px;
+    height: 60px;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 0px;
+    margin: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Style the buttons individually */
+
+.showcase-container .analytics{
+    background-color: orangered;
+    transition: all 0.2s;
+}
+
+.showcase-container .analytics:hover{
+    background-color: rgb(216, 58, 0);
+}
+
+.showcase-container .other{
+    background-color: rgb(63, 63, 63);
+    transition: all 0.2s;
+}
+
+.showcase-container .other:hover{
+    background-color: rgb(109, 109, 109);
+}
+
+/* CSS For everything under the showcase */
+
+.container{
+    width: 100%;
+    text-align: center;
+}
+
+.who-are-we{
+    font-size: 0px;
+}
+
+.who-are-we h1{
+    font-size: 60px;
+    padding: 0;
+    margin: 0;
+    padding-top: 50px;
+}
+
+.what-is-cardata{
+    font-size: 25px;
+    color: black;
+    width: 650px;
+    text-align: center;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+.tile{
+    width: 323px;
+    height: 300px;
+    background-color: white;
+    border-radius: 12px;
+    margin: 70px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.tile i{
+    font-size: 45px;
+    padding-top: 30px;
+}
+
+.tile h2{
+    font-size: 25px;
+    padding: 0;
+    margin: 0;
+    padding-top: 20px;
+}
+
+.tile p{
+    box-sizing: border-box;
+    padding: 30px 5px 0px 5px;
+    margin: 0;
+    font-size: 18px;
+    text-justify:distribute-all-lines;
+}
+
+
+.how-does-it-work{
+    width: 100%;
+    min-height: 600px;
+    background-image: url("img/squad_2_edited.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.how-does-it-work h1{
+    font-size: 60px;
+    color: white;
+    padding: 0;
+    margin: 0;
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.hdiw-column{
+    width: 330px;
+    min-height: 350px !important;
+    max-height: 350px !important;
+    display: inline-block;
+    border-right: 1px solid white;
+    vertical-align: top;
+    text-align: left;
+    padding: 0px 30px;
+}
+
+.last-column{
+    border:0;
+}
+
+.hdiw-column h2{
+    color: white;
+    font-size: 25px;
+    vertical-align: middle;
+}
+
+.hdiw-column p{
+    color: white;
+    font-size: 20px;
+    line-height: 130%;
+}
+
+.join-us{
+    text-align: center;
+    min-height: 350px;
+}
+
+.join-us h1{
+    font-size: 60px;
+    padding: 0;
+    margin: 0;
+    padding-top: 70px;
+    padding-bottom: 10px;
+}
+
+.join-us-content p{
+    font-size: 23px;
+    padding: 0;
+    margin: 0;
+}
+
+.join-us-content button{
+    border: none;
+    border-radius: 25px;
+    width: 200px;
+    height: 50px;
+    background-color: orangered;
+    color: white;
+    font-size: 19px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.join-us-content button:hover{
+    background-color: rgb(216, 58, 0);
+}
+
+
+.footer{
+    background: rgb(0, 0, 0);
+    color: white;
+    height: 250px;
+    position: relative;
+    text-align: left;
+}
+
+.column{
+    display: inline-block;
+    vertical-align: middle;
+    min-height: 150px;
+    max-height: 150px;
+    padding: 10px 30px;
+    text-align: left;
+}
+
+.column h3{
+    font-size: 20px;
+    color: #8a8a8a;
+}
+
+.column a{
+    color: rgb(204, 204, 204);
+    text-decoration: none;
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+    transition: all 0.2s;
+}
+
+.column a:hover{
+    color: orangered;
+}
+
+.footer-content hr{
+    border: 1px solid rgb(63, 63, 63);
+    width: 98%;
+    box-sizing: border-box;
+}
+
+.footer-content p{
+    width: 600px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+
+.back-to-top{
+    float: right;
+    padding-right: 30px;
+    padding-top: 30px;
+}
+
+.back-to-top a{
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.back-to-top a i{
+    padding-right: 5px;
+    position: relative;
+    bottom: 0;
+    transition: all 0.2s;
+    color: white;
+}
+
+.back-to-top a:hover{
+    color: orangered;
+}
+
+.back-to-top a:hover i{
+    color: orangered;
+    bottom: 3px;
+}
+
+.back-to-top::after{
+    clear: both;
+    content: "";
+    display: block;
+}
+
+
+/* Custom Scrollbar settings */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(77, 77, 77);
+    border-radius: 0px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(114, 114, 114);
+}

@@ -1,0 +1,188 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Source Sans Pro SemiBold';
+    src: url(fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf);
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    overflow-x: hidden;
+    background-image: url(img/agera.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+#main{
+    width: 100%;
+    position: relative;
+}
+
+.main-content h1{
+    font-size: 60px;
+    color: white;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.form a{
+    font-size: 23px;
+    text-decoration: none;
+    color: black;
+    float: left;
+    margin-top: 10px;
+    color: white;
+}
+
+.main-form{
+    width: 100%;
+    height: 100%;
+    margin-top: 200px;
+}
+
+.form form{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    background-color: white;
+}
+
+
+.form .row{
+    display: block;
+    padding: 10px;
+}
+
+.form form input{
+    box-sizing: border-box;
+    width: 100%;
+    height: 30px;
+    outline: none;
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+}
+
+.form .row-model {
+    width: 49.7%;
+    display: inline-block;
+}
+
+.row-model select{
+    width: 100%;
+    height: 30px;
+    outline: none;
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+}
+
+
+.form .row-ftd{
+    width: 32.9%;
+    display: inline-block;
+}
+
+.row-ftd #ftd{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(200, 200, 200);
+}
+
+.row-cth{
+    width: 32.9%;
+    display: inline-block;
+}
+
+.row-cth #cth{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(200, 200, 200);
+}
+
+.row-cth #engcap{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgb(200, 200, 200);
+}
+
+.row-tcy{
+    width: 24.6%;
+    display: inline-block;
+}
+
+.row-tcy #tcy{
+    width: 100%;
+    height: 30px;
+    border: 1px solid rgb(200, 200, 200);
+    outline: none;
+    border-radius: 5px;
+}
+
+
+
+.row select{
+    cursor: pointer;
+}
+
+#submit{
+    float: left;
+    width: 100px;
+    height: 35px;
+    cursor: pointer;
+    background-color: orangered;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px #aaaaaa;
+    font-size: 16px;
+    color: white;
+    border:none;
+    outline: none;
+    transition: all 0.2s;
+    font-family: 'Source Sans Pro SemiBold';
+}
+
+#submit:hover{
+    background-color: rgb(224, 60, 0);
+}
+
+.notice{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.car-upload-status{
+    padding: 0;
+    margin: 0;
+    padding-top: 10px;
+}
+
+#writeError{
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    color: black;
+}
+
+#writeError b{
+    color: red;
+}
+
+.clear{
+    clear: both;
+}
