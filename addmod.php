@@ -47,6 +47,10 @@
     </div>
     <!-- Form below handles adding mods, repairs, tunes and other into the database -->
     <div id="main">
+        <div class="page-name">
+            <h3 class="page-name-text">Add new work</h3>
+            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Car Mods</a> <span>-</span> <a href="#">Add new work</a></p>
+        </div>
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
                 <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
@@ -145,7 +149,7 @@
                     <br>
                     <textarea name="description" id="desc" cols="30" rows="10" placeholder="ex. Changed a timing belt"></textarea>
                 </div>
-                <div class="row">
+                <div class="row last-row">
                     <!-- Submit button -->
                     <input type="submit" name="submit" id="submit" value="Submit">
                     <div class="clear"></div>
@@ -181,14 +185,14 @@
                                 
                                 // Notify user of the upload status
                                 if($result){
-                                    echo "<p>Successfully added!</p>";
+                                    echo "<p class='mod-upload-status'>Successfully added!</p>";
                                 }
                                 else{
-                                    echo "<p>Something went wrong</p>";
+                                    echo "<p class='mod-upload-status'>Something went wrong</p>";
                                 }
                             }
                             else{
-                                echo "<p>Some information was wrong...</p>";
+                                echo "<p class='mod-upload-status'>Some information was wrong...</p>";
                             }
                         }
                     ?>
@@ -196,6 +200,38 @@
             </form>
         </div>
     </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Links</h3>
+                <a href="">Login</a>
+                <br>
+                <a href="">About</a>
+                <br>
+                <a href="">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal Documents</h3>
+                <a href="">Terms of service</a>
+                <br>
+                <a href="">Privacy policy</a>
+                <br>
+                <a href="">Cookies policy</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+            </div>
+            <hr>
+            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+
+        </div>
+
+    <script>
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 
     <script>
         // Sidebar toggler

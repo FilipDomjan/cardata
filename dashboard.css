@@ -6,9 +6,13 @@
 body, html{
     margin: 0;
     padding: 0;
+    background-image: url("img/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Source Sans Pro', sans-serif;
     height: 100%;
-    background-color: #dadada;
 }
 
 /* CSS For the navbar */
@@ -80,6 +84,50 @@ body, html{
     transition: all 0.3s;
     position: relative;
     top: 108px;
+    padding-bottom: 150px;
+    min-height: 100%;
+}
+
+.page-name{
+    float: left;
+    height: 47px;
+    padding-bottom: 10px;
+}
+
+.page-name h3{
+    font-size: 25px;
+    margin: 0;
+    padding-right: 15px;
+    border-right: 1px solid rgb(189, 189, 189);
+}
+
+.page-name p{
+    color: #727586;
+    padding-left: 15px;
+    font-size: 15px;
+    position: relative;
+    bottom: 17px;
+}
+
+.page-name a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.page-name a:hover{
+    color: orangered;
+}
+
+.page-name span{
+    font-size:30px;
+    position: relative;
+    top: 3px;
+}
+
+.page-name-text{
+    display: inline-block;
+    position: relative;
+    bottom: 15px;
 }
 
 .sidebar{
@@ -182,6 +230,89 @@ body, html{
 
 .clear{
     clear: both;
+}
+
+.footer{
+    background: rgb(0, 0, 0);
+    color: white;
+    height: 250px;
+    position: relative;
+    text-align: left;
+}
+
+.footer-column{
+    display: inline-block;
+    vertical-align: middle;
+    min-height: 150px;
+    max-height: 150px;
+    padding: 10px 30px;
+    text-align: left;
+}
+
+.footer-column h3{
+    font-size: 20px;
+    color: #8a8a8a;
+}
+
+.footer-column a{
+    color: rgb(204, 204, 204);
+    text-decoration: none;
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+    transition: all 0.2s;
+}
+
+.footer-column a:hover{
+    color: orangered;
+}
+
+.footer-content hr{
+    border: 1px solid rgb(63, 63, 63);
+    width: 98%;
+    box-sizing: border-box;
+}
+
+.footer-content p{
+    width: 600px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+
+.back-to-top{
+    float: right;
+    padding-right: 30px;
+    padding-top: 30px;
+}
+
+.back-to-top a{
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.back-to-top a i{
+    padding-right: 5px;
+    position: relative;
+    bottom: 0;
+    transition: all 0.2s;
+    color: white;
+}
+
+.back-to-top a:hover{
+    color: orangered;
+}
+
+.back-to-top a:hover i{
+    color: orangered;
+    bottom: 3px;
+}
+
+.back-to-top::after{
+    clear: both;
+    content: "";
+    display: block;
 }
 
 /* Custom Scrollbar settings */

@@ -8,7 +8,11 @@ body,html{
     padding: 0;
     font-family: 'Source Sans Pro', sans-serif;
     height: 100%;
-    background-color: #dadada;
+    background-image: url("img/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* CSS For the navbar */
@@ -79,6 +83,49 @@ body,html{
     transition: all 0.3s;
     position: relative;
     top: 108px;
+    padding-bottom: 150px;
+    min-height: 100%;
+}
+
+.page-name{
+    float: left;
+    height: 47px;
+}
+
+.page-name h3{
+    font-size: 25px;
+    margin: 0;
+    padding-right: 15px;
+    border-right: 1px solid rgb(189, 189, 189);
+}
+
+.page-name p{
+    color: #727586;
+    padding-left: 15px;
+    font-size: 15px;
+    position: relative;
+    bottom: 17px;
+}
+
+.page-name a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.page-name a:hover{
+    color: orangered;
+}
+
+.page-name span{
+    font-size:30px;
+    position: relative;
+    top: 3px;
+}
+
+.page-name-text{
+    display: inline-block;
+    position: relative;
+    bottom: 15px;
 }
 
 .sidebar{
@@ -115,6 +162,8 @@ body,html{
     color: orangered;
 }
 
+
+
 .row{
     width: 100%;
     margin-bottom: 35px;
@@ -123,19 +172,21 @@ body,html{
 .row input, .row select{
     width: 100%;
     height: 45px;
-    border-radius: 5px;
-    font-size: 20px;
+    border-radius: 2px;
+    font-size: 18px;
     color: black;
     background-color: white;
-    border: 1px solid gray;
+    border: 1px solid rgb(200, 200, 200);
     outline: none;
     box-sizing: border-box;
     vertical-align: top;
     padding-left: 5px;
+    font-family: 'Source Sans Pro SemiBold';
 }
-
 .row label{
-    font-size: 22px;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(107, 107, 107)
 }
 
 .row-selectors{
@@ -150,22 +201,28 @@ body,html{
 
 .row textarea{
     width: 100%;
-    border-radius: 5px;
-    font-size: 20px;
+    border-radius: 2px;
+    font-size: 18px;
     color: black;
     background-color: white;
-    border: 1px solid gray;
+    border: 1px solid rgb(200, 200, 200);
     outline: none;
     box-sizing: border-box;
     vertical-align: top;
     padding-left: 5px;
+    font-family: 'Source Sans Pro SemiBold';
     resize: none;
-    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.last-row::after{
+    content: "";
+    clear: both;
+    display: block;
 }
 
 #submit{
     width: 160px;
-    border-radius: 25px;
+    border-radius: 2px;
     cursor: pointer;
     background-color: orangered;
     color: white;
@@ -175,127 +232,101 @@ body,html{
     font-size: 20px;
     padding: 0;
     margin: 0;
+    float:right;
 }
 
 #submit:hover{
     background-color: rgb(216, 58, 0);
 }
 
-/*
-#main form{
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    border-radius: 5px;
+.mod-upload-status{
+    font-size: 20px;
+    float:left;
+    padding:0;
+    margin: 0;
+    position: relative;
+    top: 10px;
 }
 
-#main form .row{
-    display: block;
-    padding: 15px 10px 0px 10px;
+.footer{
+    background: rgb(0, 0, 0);
+    color: white;
+    height: 250px;
+    position: relative;
     text-align: left;
 }
 
-#main form input{
-    width: 100%;
-    height: 30px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    box-sizing: border-box;
-    font-size: 15px;
-}
-
-#main form label{
-    position: relative;
-    bottom: 5px;
-}
-
-.row-selectors{
+.footer-column{
     display: inline-block;
-    width: 49.7%;
+    vertical-align: middle;
+    min-height: 150px;
+    max-height: 150px;
+    padding: 10px 30px;
+    text-align: left;
 }
 
-.row-selectors select{
-    width: 100%;
-    height: 30px;
-    border:none;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    font-size: 15px;
-    padding-left: 2px;
+.footer-column h3{
+    font-size: 20px;
+    color: #8a8a8a;
 }
 
-.row input{
-    padding-left: 5px !important;
-}
-
-.row-price{
-    width: 49.7%;
-    display: inline-block;
-}
-
-.row-price select, input{
-    width: 100%;
-    font-size: 15px;
-    padding-left: 2px;
-}
-
-.row-price select{
-    width: 100%;
-    height: 30px;
-    border:none;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-}
-
-.row textarea{
-    width: 100%;
-    box-sizing: border-box;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 5px;
-    resize: none;
-    font-family: 'Source Sans Pro';
+.footer-column a{
+    color: rgb(204, 204, 204);
+    text-decoration: none;
     font-size: 17px;
-    padding-left: 5px;
-    padding-top: 5px;
-}
-
-#submit{
-    float: left;
-    width: 100px;
-    height: 35px;
-    cursor: pointer;
-    padding: 0;
-    margin-bottom: 10px;
-    background-color: orangered;
-    border-radius: 5px;
-    box-shadow: 0px 2px 2px #aaaaaa;
-    font-size: 15px;
-    color: white;
-    border:none;
-    outline: none;
-    transition: all 0.2s;
-    font-family: 'Source Sans Pro SemiBold';
-}
-
-#submit:hover{
-    background-color: rgb(224, 60, 0);
-}
-
-.clear{
-    clear: both;
-}
-
-.row p{
     padding: 0;
     margin: 0;
-    padding-bottom: 10px;
+    transition: all 0.2s;
 }
 
-.go-back{
-    padding-top: 10px !important;
-    padding-bottom: 10px;
+.footer-column a:hover{
+    color: orangered;
 }
-*/
+
+.footer-content hr{
+    border: 1px solid rgb(63, 63, 63);
+    width: 98%;
+    box-sizing: border-box;
+}
+
+.footer-content p{
+    width: 600px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+
+.back-to-top{
+    float: right;
+    padding-right: 30px;
+    padding-top: 30px;
+}
+
+.back-to-top a{
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.back-to-top a i{
+    padding-right: 5px;
+    position: relative;
+    bottom: 0;
+    transition: all 0.2s;
+    color: white;
+}
+
+.back-to-top a:hover{
+    color: orangered;
+}
+
+.back-to-top a:hover i{
+    color: orangered;
+    bottom: 3px;
+}
+
+.back-to-top::after{
+    clear: both;
+    content: "";
+    display: block;
+}

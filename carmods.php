@@ -52,6 +52,31 @@
 
     <!-- Main container -->
     <div id="main">
+        <div class="page-name">
+            <h3 class="page-name-text">Car Mods</h3>
+            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Car Mods</a></p>
+            <div class="search">
+                <form action="" method="POST">
+                    <div class="search-items">
+                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <input type="text" name="search-table" id="search" placeholder="Search table">
+                    </div>
+                    <div class="search-items">
+                        <?php
+                            if(isset($_POST["search-table"])){
+                                if(strlen($_POST["search-table"]) > 0){
+                                    echo "<input type='submit' name='submit' id='submit' value='Reset'>";
+                                }
+                                else{
+                                    null;
+                                }
+                            }
+                        ?>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="clear"></div>
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
                 <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
@@ -61,69 +86,69 @@
             </div>
         </nav>
         <!-- Car selector for sorting table -->
-        <div class="car-selector">
-            <form action="" method="GET">
-                <select name="carSelector" id="carSelect" onchange="window.location=this.value">
-                    <?php
-                        // Get the username for connection to database
-                        // database_name = username
-                        $username = htmlspecialchars($_SESSION["username"]);
-
-                        // Connect to the database
-                        $server = 'localhost';
-                        $user = 'root';
-                        $password = '';
-                        $database = "$username";
-                        
-                        $userdb = mysqli_connect($server, $user, $password, $database);
-                        
-                        if($userdb -> connect_errno){
-                            echo "Failed to connect to MySQL: ".$userdb -> connect_error;
-                            exit();
-                        }
-                        
-                        // Get all the users cars
-                        $query = "SELECT id, manufacturer, model, model_year FROM cars";
-                        $result = mysqli_query($userdb, $query);
-                        
-                        // If no cars are found in the database show "No cars" in the selector
-                        if(mysqli_num_rows($result) == 0){
-                            echo "<option value='' selected disabled>";
-                            echo "No cars";
-                            echo "</option>";
-                        }
-                        // If there are cars detected show them in the selector
-                        else{
-                            // First option is All cars which sets the carid to 0 and shows all cars
-                            echo "<option value='carmods.php?carid=0' selected>All cars</option>";
-                            while($row = mysqli_fetch_assoc($result)){
-                                $carManuf = $row["manufacturer"];
-                                $carModel = $row["model"];
-                                $year = $row["model_year"];
-                                $carid = $row["id"];
-                                
-                                // Without this if a user sorts by a car, and deletes something from the table it
-                                // will reset and show all cars right away, we don't want that, we want to stay sorted
-                                // This variable ensures that it stays sorted
-                                $pageID = $_GET["carid"];
-
-
-                                if($carid == $pageID){
-                                    echo "<option value='carmods.php?carid=$carid' selected>$year $carManuf $carModel</option>";
-                                }
-                                else{
-                                    echo "<option value='carmods.php?carid=$carid'>$year $carManuf $carModel</option>";
-                                }
-                            }
-                        }
-
-                        
-                    ?>
-                </select>
-            </form>
-        </div>
         <div class="table">
             <div class="table-tools">
+                <div class="car-selector">
+                    <form action="" method="GET">
+                        <select name="carSelector" id="carSelect" onchange="window.location=this.value">
+                            <?php
+                                // Get the username for connection to database
+                                // database_name = username
+                                $username = htmlspecialchars($_SESSION["username"]);
+        
+                                // Connect to the database
+                                $server = 'localhost';
+                                $user = 'root';
+                                $password = '';
+                                $database = "$username";
+                                
+                                $userdb = mysqli_connect($server, $user, $password, $database);
+                                
+                                if($userdb -> connect_errno){
+                                    echo "Failed to connect to MySQL: ".$userdb -> connect_error;
+                                    exit();
+                                }
+                                
+                                // Get all the users cars
+                                $query = "SELECT id, manufacturer, model, model_year FROM cars";
+                                $result = mysqli_query($userdb, $query);
+                                
+                                // If no cars are found in the database show "No cars" in the selector
+                                if(mysqli_num_rows($result) == 0){
+                                    echo "<option value='' selected disabled>";
+                                    echo "No cars";
+                                    echo "</option>";
+                                }
+                                // If there are cars detected show them in the selector
+                                else{
+                                    // First option is All cars which sets the carid to 0 and shows all cars
+                                    echo "<option value='carmods.php?carid=0' selected>All cars</option>";
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        $carManuf = $row["manufacturer"];
+                                        $carModel = $row["model"];
+                                        $year = $row["model_year"];
+                                        $carid = $row["id"];
+                                        
+                                        // Without this if a user sorts by a car, and deletes something from the table it
+                                        // will reset and show all cars right away, we don't want that, we want to stay sorted
+                                        // This variable ensures that it stays sorted
+                                        $pageID = $_GET["carid"];
+        
+        
+                                        if($carid == $pageID){
+                                            echo "<option value='carmods.php?carid=$carid' selected>$year $carManuf $carModel</option>";
+                                        }
+                                        else{
+                                            echo "<option value='carmods.php?carid=$carid'>$year $carManuf $carModel</option>";
+                                        }
+                                    }
+                                }
+        
+                                
+                            ?>
+                        </select>
+                    </form>
+                </div>
                 <!-- Table editing tools: Edit information, delete data, add new data -->
                 <div class="table-editors">
                     <a id="edit-table"><i class="fa-solid fa-pen"></i></a>
@@ -131,26 +156,6 @@
                     <a href="addmod.php"><i class="fa-solid fa-gear"></i></a>
                 </div>
                 <!-- Table search, partly functional -->
-                <div class="search">
-                    <form action="" method="POST">
-                        <div class="search-items">
-                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                            <input type="text" name="search-table" id="search" placeholder="Search table">
-                        </div>
-                        <div class="search-items">
-                            <?php
-                                if(isset($_POST["search-table"])){
-                                    if(strlen($_POST["search-table"]) > 0){
-                                        echo "<input type='submit' name='submit' id='submit' value='Reset'>";
-                                    }
-                                    else{
-                                        null;
-                                    }
-                                }
-                            ?>
-                        </div>
-                    </form>
-                </div>
             </div>
             <!-- Create a table -->
             <table class="mod-table">
@@ -172,6 +177,7 @@
 
                     if(isset($_POST["search-table"]))
                     {
+                        empty($search_value);
                         $search_value = $_POST["search-table"];
                     }
                     if(isset($_POST["submit"])){
@@ -319,6 +325,33 @@
                     }
                     ?>
             </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Links</h3>
+                <a href="">Login</a>
+                <br>
+                <a href="">About</a>
+                <br>
+                <a href="">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal Documents</h3>
+                <a href="">Terms of service</a>
+                <br>
+                <a href="">Privacy policy</a>
+                <br>
+                <a href="">Cookies policy</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+            </div>
+            <hr>
+            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+
         </div>
     </div>
 

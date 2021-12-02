@@ -49,6 +49,11 @@
 
     <!-- Main container -->
     <div id="main">
+        <div class="page-name">
+            <h3 class="page-name-text">Dashboard</h3>
+            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Dashboard</a></p>
+        </div>
+        <div class="clear"></div>
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
                 <a href="#"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
@@ -1550,6 +1555,33 @@
         $monthlyOnTunes = trim($monthlyOnTunes, ",");
         $monthlyOnOther = trim($monthlyOnOther, ",");
     ?>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Links</h3>
+                <a href="">Login</a>
+                <br>
+                <a href="">About</a>
+                <br>
+                <a href="">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal Documents</h3>
+                <a href="">Terms of service</a>
+                <br>
+                <a href="">Privacy policy</a>
+                <br>
+                <a href="">Cookies policy</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+            </div>
+            <hr>
+            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+
+        </div>
+    </div>
 
     <!-- Code for the monthly expenses chart -->
     <script>

@@ -46,6 +46,11 @@
         </div>
     </div>
     <div id="main">
+        <div class="page-name">
+            <h3 class="page-name-text">Add a car</h3>
+            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Add a car</a></p>
+        </div>
+        <div class="clear"></div>
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
                 <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
@@ -99,7 +104,7 @@
                         <div class="row-model">
                             <label for="">Model</label>
                             <br>
-                            <input type="text" name="model" id="model" placeholder="ex. 525d" required>
+                            <input type="text" name="model" id="model" placeholder="ex. 525d" required autocomplete="off">
                         </div>
                     </div>
                     <div class="row">
@@ -137,19 +142,19 @@
                         <div class="row-tcy">
                             <!-- Car color input field -->
                             <label for="">Color</label>
-                            <input type="text" name="color" id="tcy" placeholder="ex. Blue" required>
+                            <input type="text" name="color" id="tcy" placeholder="ex. Blue" required autocomplete="off">
                         </div>
                         <div class="row-tcy">
                             <!-- Vinyls input field -->
                             <label for="">Vinyl</label>
-                            <input type="text" name="vinyl" id="tcy" placeholder="ex. Black Stripes">
+                            <input type="text" name="vinyl" id="tcy" placeholder="ex. Black Stripes" autocomplete="off">
                         </div>
                     </div>
                     <div class="row">
                         <div class="row-cth">
                             <!-- Engine capacity input field -->
                             <label for="">Engine Capacity (cm3)</label>
-                            <input type="text" name="engcapacity" id="engcap" placeholder="ex. 1900" required oninput=checkForString()>
+                            <input type="text" name="engcapacity" id="engcap" placeholder="ex. 1900" required autocomplete="off" oninput=checkForString()>
                         </div>
                         <div class="row-cth">
                             <!-- Engine type select field -->
@@ -202,7 +207,7 @@
                         <div class="row-cth">
                             <!-- Input field for horsepower, accepts only numbers, if a string is detected upon input an error is thrown -->
                             <label for="">Horsepower (HP/KS)</label>
-                            <input type="text" name="horsepower" id="hp" placeholder="ex. 150" required oninput="checkForString()">
+                            <input type="text" name="horsepower" id="hp" placeholder="ex. 150" required autocomplete="off" oninput="checkForString()">
                         </div>
                     </div>
                     <div class="row">
@@ -246,9 +251,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row last-row">
                         <!-- Submit button -->
-                        <input type="submit" name="submit" id="submit" value="Submit">
+                        <input type="submit" name="submit" id="submit" value="Submit" autocomplete="off">
                         <div class="clear"></div>
                         <p id="writeError" style="display:none"></p>
                         <?php
@@ -389,6 +394,37 @@
         </div>
     </div>
 
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Links</h3>
+                <a href="">Login</a>
+                <br>
+                <a href="">About</a>
+                <br>
+                <a href="">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal Documents</h3>
+                <a href="">Terms of service</a>
+                <br>
+                <a href="">Privacy policy</a>
+                <br>
+                <a href="">Cookies policy</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+            </div>
+            <hr>
+            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+
+        </div>
+    
+    <script>
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 
     <script>
         // Check for a string in Engine capacity and Horsepower inputs
@@ -398,15 +434,15 @@
 
             if(isNaN(x) && isNaN(y)){
                 document.getElementById("writeError").style.display = "block";
-                document.getElementById("writeError").innerHTML = "Error: Engine Capacity nor Horsepower <b>must not contain letters!</b>";
+                document.getElementById("writeError").innerHTML = "Note: Engine Capacity nor Horsepower <b>must not contain letters!</b>";
             }
             else if(isNaN(x)){
                 document.getElementById("writeError").style.display = "block";
-                document.getElementById("writeError").innerHTML = "Error: Engine Capacity <b>must not contain letters!</b>";
+                document.getElementById("writeError").innerHTML = "Note: Engine Capacity <b>must not contain letters!</b>";
             }
             else if(isNaN(y)){
                 document.getElementById("writeError").style.display = "block";
-                document.getElementById("writeError").innerHTML = "Error: Horsepower <b>must not contain letters!</b>";
+                document.getElementById("writeError").innerHTML = "Note: Horsepower <b>must not contain letters!</b>";
             }
             else{
                 document.getElementById("writeError").style.display = "none";

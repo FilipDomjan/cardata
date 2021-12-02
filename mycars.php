@@ -45,6 +45,15 @@
         </div>
     </div>
     <div id="main">
+        <div class="page-name">
+            <h3 class="page-name-text">My Cars</h3>
+            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">My Cars</a></p>
+        </div>
+        <div class="buttons">
+                <a href="mycars.php?extra=1"><i class="fa-solid fa-list"></i></a>
+                <a href="mycars.php?extra=0" class="simple-view"><i class="fa-regular fa-square"></i></a>
+        </div>
+        <div class="clear"></div>
         <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
             <div class="sidebar-items">
                 <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
@@ -54,10 +63,6 @@
             </div>
         </nav>
         <div class="main-content">
-            <div class="buttons">
-                <a href="mycars.php?extra=1">Advanced view</a>
-                <a href="mycars.php?extra=0" class="simple-view">Simple view</a>
-            </div>
             <div class="mycars-container">
                 <?php
                     $username = htmlspecialchars($_SESSION["username"]);
@@ -77,9 +82,12 @@
                     if(isset($_GET["delcar"])){
                         $delcar = $_GET["delcar"];
     
-                        $deletecar = "DELETE FROM cars WHERE id = $delcar";
-                        $delete_result = mysqli_query($userdb, $deletecar);
+                        $delete = "DELETE FROM mods WHERE carid = $delcar";
+                        $delete_result = mysqli_query($userdb, $delete);
 
+                        $delete = "DELETE FROM cars WHERE id = $delcar";
+                        $delete_result = mysqli_query($userdb, $delete);
+                        
                         header("Refresh: 0; url=mycars.php");
     
                     }else{
@@ -87,12 +95,12 @@
                     }
 
                     if(isset($_GET["extra"])){
-                        $_SESSION["extra"] = $_GET["extra"]; 
+                        $extra = $_GET["extra"];
+                        $_SESSION["extra"] = $extra;
                     }
 
                     if($_SESSION["extra"] == 0){
-    
-                        $query = "SELECT id, manufacturer, model, model_year FROM cars";
+                        $query = "SELECT id, manufacturer, model, model_year FROM cars ORDER BY manufacturer";
                         $result = mysqli_query($userdb, $query);
     
                         while($row = mysqli_fetch_assoc($result)){
@@ -247,6 +255,33 @@
                 }
                 ?>
             </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Links</h3>
+                <a href="">Login</a>
+                <br>
+                <a href="">About</a>
+                <br>
+                <a href="">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h3>Legal Documents</h3>
+                <a href="">Terms of service</a>
+                <br>
+                <a href="">Privacy policy</a>
+                <br>
+                <a href="">Cookies policy</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+            </div>
+            <hr>
+            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+
         </div>
     </div>
 
