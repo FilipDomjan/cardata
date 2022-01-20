@@ -14,14 +14,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="mycars.css">
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="my_cars.css">
     <link rel="stylesheet" href="fonts/fontawesome/css/all.css">
-    <title>CarData | My Cars</title>
+    <title>CarData | My car collection</title>
 </head>
 <body>
-    <div class="navbar">    
-        <img src="img/cardata_logo_white.png" alt="logo">
+    <div class="navbar not-fixed">    
         <div class="links">
+            <img src="img/cardata_logo_white.png" alt="logo">
             <?php
                 error_reporting(0);
 
@@ -30,40 +33,72 @@
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='index.php'>Home</a>";
-                    echo "<a href='dashboard.php' class='active'>My CarData</a>";
-                    echo "<a href='#'>Contact</a>";
-                    echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
-                    echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
+                    echo "<a href='contact.php'>Contact</a>";
+                    echo "<a href='about.php' class='about'>About</a>";
+                    echo "<a href='#' class='active'>My Cardata</a>";
+                    echo "<div class='dropdown login-dropdown'>";
+                    echo "<button class='drop-btn login-btn'><i class='fa-solid fa-user'></i><i class='fa-solid fa-caret-down'></i></button>";
+                    echo "<div class='dropdown-content login-dropdown-content'>";
+                    echo "<div class='connection-status'>";
+                    echo "<p class='cs-user'>$username</p>";
+                    echo "<p class='cs-connected'><i class='fa-solid fa-circle'></i>Connected</p>";
+                    echo "</div>";
+                    echo "<hr>";
+                    echo "<a href='users/logout.php' class='logout'>Logout <i class='fa-solid fa-right-from-bracket'></i></a>"; 
+                    echo "</div>";
+                    echo "</div>";
                 }
                 // If not show original items
                 else{
-                    echo "<a class='active'>Home</a>";
-                    echo "<a href='#'>Contact</a>";
-                    echo "<a href='users/login.php'>Login</a>";
+                    echo "<a href='#' class='active'>Home</a>";
+                    echo "<a href='contact.php'>Contact</a>";
+                    echo "<a href='about.php' class='about'>About</a>";
+                    echo "<a href='users/register.php' class='login-links reg-link'>Register</a>";
+                    echo "<a href='users/login.php' class='login-links log-link'>Sign In</a>";           
                 }
             ?>
         </div>
     </div>
+    
+    <!-- Mini navbar, only present in My Cardata sections -->
+    <div id="mini-navbar">
+        <div class="mini-links">
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='dashboard.php'">Dashboard</button>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn active-btn">My Cars</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_car.php">Add a car</a>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='service_book.php?carid=0'">Service Book</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_service.php">Add to Service Book</a>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='gas_data.php'">Gas Data</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_gas.php">Add to Gas Data</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div id="main">
-        <div class="page-name">
+        <div class="clear"></div>
+        <!-- <div class="page-name">
             <h3 class="page-name-text">My Cars</h3>
             <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">My Cars</a></p>
-        </div>
+        </div> -->
         <div class="buttons">
-                <a href="mycars.php?extra=1"><i class="fa-solid fa-list"></i></a>
-                <a href="mycars.php?extra=0" class="simple-view"><i class="fa-regular fa-square"></i></a>
+                <a href="my_cars.php?extra=1"><i class="fa-solid fa-list"></i></a>
+                <a href="my_cars.php?extra=0" class="simple-view"><i class="fa-regular fa-square"></i></a>
         </div>
         <div class="clear"></div>
-        <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
-            <div class="sidebar-items">
-                <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
-                <a href="#"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
-                <a href="carmods.php?carid=0"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
-                <a href="addcar.php"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>
-            </div>
-        </nav>
         <div class="main-content">
-            <div class="mycars-container">
                 <?php
                     $username = htmlspecialchars($_SESSION["username"]);
 
@@ -85,10 +120,13 @@
                         $delete = "DELETE FROM mods WHERE carid = $delcar";
                         $delete_result = mysqli_query($userdb, $delete);
 
+                        $delete = "DELETE FROM gas WHERE car_id = $delcar";
+                        $delete_result = mysqli_query($userdb, $delete);
+
                         $delete = "DELETE FROM cars WHERE id = $delcar";
                         $delete_result = mysqli_query($userdb, $delete);
                         
-                        header("Refresh: 0; url=mycars.php");
+                        header("Refresh: 0; url=my_cars.php");
     
                     }else{
                         $deletecar = null;
@@ -100,6 +138,7 @@
                     }
 
                     if($_SESSION["extra"] == 0){
+                        echo "<div class='mycars-container'>";
                         $query = "SELECT id, manufacturer, model, model_year FROM cars ORDER BY manufacturer";
                         $result = mysqli_query($userdb, $query);
     
@@ -118,21 +157,22 @@
                             echo "<p>$modelYear $carManuf $carModel</p>";
                             echo "</div>";
                             echo "</div>";
-                            echo '<a class="delete-car" href="mycars.php?delcar='.$carid.'"><i class="fa-solid fa-circle-xmark"></i></a>';
+                            echo '<a class="delete-car" href="my_cars.php?pd='.$carid.'"><i class="fa-solid fa-circle-xmark"></i></a>';
                             echo "</div>";
                             }
                             
-                        echo "<div class='mycar-item add-new-car'"."onclick="."location.href='addcar.php'>";
+                        echo "<div class='mycar-item add-new-car'"."onclick="."location.href='add_car.php'>";
                             echo "<div class='mycar-item-content'>";
                                 echo "<i class='fa-solid fa-car'></i>";
                                 echo "<p>Add new car <span><i class='fa-solid fa-plus'></i></span></p>";
                             echo "</div>";
                         echo "</div>";
-                        echo "<div class='clear'></div>";
+                        echo "</div>";
                     }
                         
                     else{
-    
+                        
+                        echo "<div class='mycars-extended-container'>";
                         $query = "SELECT cars.id as car_id, manufacturer, model, chassis, color, vinyl, model_year, engine_config, engine_capacity, horsepower, fuel_type, transmission, drivetrain FROM cars";
                         $result = mysqli_query($userdb, $query);
 
@@ -160,7 +200,7 @@
                                 echo "<div class='car-data-content'>";
                                     echo "<div class='car-name-delete'>";
                                     echo "<h2>$year $carManuf $carModel</h2>";
-                                    echo "<a href='mycars.php?delcar=$carid'>Delete</a>";
+                                    echo "<a href='my_cars.php?pd=$carid'>Delete</a>";
                                     echo "<div class='clear'></div>";
                                     echo "</div>";
                                     echo "<hr>";
@@ -245,22 +285,47 @@
                         }
                         
                         echo "<div class='clear'></div>";
-                        echo "<div class='mycar-item-large add-new-car-extra'"."onclick="."location.href='addcar.php'>";
+                        echo "<div class='mycar-item-large add-new-car-extra'"."onclick="."location.href='add_car.php'>";
                             echo "<div class='mycar-item-large-content'>";
                                 echo "<i class='fa-solid fa-car'></i>";
                                 echo "<p>Add new car <span><i class='fa-solid fa-plus'></i></span></p>";
                             echo "</div>";
                         echo "</div>";
-                        echo "<div class='clear'></div>";
+                        echo "</div>";
                 }
                 ?>
             </div>
-        </div>
     </div>
+
+    <?php
+        if(isset($_GET["pd"])){
+            $delete_id = $_GET["pd"];
+
+            $query = "SELECT manufacturer, model, model_year FROM cars WHERE id = $delete_id";
+            $result = mysqli_query($userdb, $query);
+
+            $row = mysqli_fetch_assoc($result);
+
+            $manufacturer = $row["manufacturer"];
+            $model =  $row["model"];
+            $model_year = $row["model_year"];
+
+            echo "<div class='confirm-delete'>";
+                echo "<p>Are you sure you want to delete <u>$model_year $manufacturer $model</u>?</p>";
+                echo "<div class='confirm-buttons'>";
+                    echo '<button class="proceed-delete" onclick="location.href=\'my_cars.php?delcar='.$delete_id.'\'">Delete</button>';
+                    echo '<button class="cancel-delete" onclick="location.href=\'my_cars.php\'">Cancel</button>';
+                echo "</div>";
+            echo "</div>";
+        }
+        else{
+            null;
+        }
+    ?>
 
     <div class="footer">
         <div class="footer-content">
-            <div class="footer-column">
+            <div class="column">
                 <h3>Links</h3>
                 <a href="">Login</a>
                 <br>
@@ -268,7 +333,7 @@
                 <br>
                 <a href="">Contact</a>
             </div>
-            <div class="footer-column">
+            <div class="column">
                 <h3>Legal Documents</h3>
                 <a href="">Terms of service</a>
                 <br>
@@ -285,21 +350,24 @@
         </div>
     </div>
 
-    <script>
-        // Sidebar toggler
-        var mini = true;
-        function toggleSidebar() {
-            if (mini) {
-            document.getElementById("mySidebar").style.width = "200px";
-            document.getElementById("mySidebar").style.left = "-210px";
-            // document.getElementById("main").style.marginLeft = "210px";
-            this.mini = false;
-        } else {
-            document.getElementById("mySidebar").style.width = "70px";
-            document.getElementById("mySidebar").style.left = "-80px";
-            // document.getElementById("main").style.marginLeft = "80px";
-            this.mini = true;
-        }
+     <!-- Sticky mini navbar -->
+     <script>
+        // When the user scrolls the page, execute myFunction
+        window.onscroll = function() {myFunction()};
+
+        // Get the navbar
+        var navbar = document.getElementById("mini-navbar");
+
+        // Get the offset position of the navbar
+        var sticky = navbar.offsetTop;
+
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("mini-sticky")
+            } else {
+                navbar.classList.remove("mini-sticky");
+            }
         }
     </script>
 </body>

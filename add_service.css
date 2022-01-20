@@ -7,13 +7,13 @@ body,
 html {
   margin: 0;
   padding: 0;
-  background-color: rgb(13, 13, 13);
   font-family: "Source Sans Pro", sans-serif;
   height: 100%;
+  background-color: rgb(13, 13, 13);
 }
 
 /* CSS For the navbar */
-.fa-gauge-simple {
+.fa-screwdriver-wrench {
   color: orangered;
 }
 
@@ -22,7 +22,7 @@ html {
 /* Mini navbar dropdown menu */
 
 #mini-navbar {
-  width: 1350px;
+  width: 900px;
   height: 90px;
   margin-left: auto;
   margin-right: auto;
@@ -39,10 +39,11 @@ html {
   transform: translateX(-50%);
   width: 100%;
   z-index: 9;
+  margin-bottom: 90px;
 }
 
 .mini-sticky + #main {
-  margin-top: 115px;
+  padding-top: 90px !important;
   transition: none;
 }
 
@@ -128,184 +129,188 @@ html {
   display: block;
 }
 
-/* CSS for all other content */
-
 #main {
-  width: 1350px;
+  width: 900px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   top: 90px;
   padding-bottom: 150px;
   min-height: 100%;
-  transition: none;
 }
 
 .clear {
   clear: both;
 }
 
-/* Styling for all the dashboard tabs */
-
-/* All data */
-
-.car-data-general-content h2 {
-  color: rgb(245, 245, 245);
-  font-weight: normal;
+.row {
+  width: 100%;
+  margin-bottom: 35px;
 }
 
-.car-data-general-content hr {
-  display: none;
-}
-
-.general-data-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
-  grid-gap: 12px;
-  align-content: space-between;
-}
-
-.general-data-item {
-  width: 180px;
-  height: 200px;
-  background-color: rgb(20, 20, 20);
-  border-radius: 10px;
-  text-align: center;
-  vertical-align: top;
-}
-
-.general-data-item p,
-.general-data-item h1 {
-  color: rgb(245, 245, 245);
+.row input,
+.row select {
+  width: 100%;
+  height: 45px;
+  border-radius: 7px;
   font-size: 18px;
-  font-weight: normal;
-}
-
-.general-data-item p {
-  margin-top: 20px;
-}
-
-.general-data-item h1 {
-  font-size: 28px;
-}
-
-/* Graphs */
-
-.car-data-charts {
-  width: 48%;
-  float: left;
-}
-
-.weekly-chart {
-  margin-right: 50px;
-}
-
-.monthly-chart {
-  width: 100%;
-}
-
-/* Weekly graph */
-
-.car-data-weekly-content h2 {
   color: rgb(245, 245, 245);
-  font-weight: normal;
-  padding-bottom: 0px;
-}
-
-.car-data-weekly-content hr {
-  display: none;
-}
-
-.chart-switchers button {
-  width: 60px;
-  padding: 8px;
-  background-color: rgb(20, 20, 20);
-  color: rgb(245, 245, 245);
-  border-radius: 6px;
-  cursor: pointer;
-  outline: none;
+  background-color: rgb(40, 40, 40);
   border: none;
-  transition: all 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  vertical-align: top;
+  padding-left: 5px;
+  font-family: "Source Sans Pro";
+}
+.row label {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: rgb(153, 153, 153);
 }
 
-.chart-switchers button:hover {
-  background-color: rgb(30, 30, 30);
+.row-selectors {
+  width: 49.7%;
+  display: inline-block;
 }
 
-.chart-switchers {
-  margin-bottom: 30px;
+.row-price {
+  width: 49.7%;
+  display: inline-block;
 }
 
-/* Monthly chart */
-
-.car-data-monthly-content h2 {
-  color: rgb(245, 245, 245);
-  font-weight: normal;
-  padding-bottom: 0px;
+.row-date {
+  width: 33%;
+  display: inline-block;
 }
 
-.car-data-monthly-content hr {
-  display: none;
-}
-
-.info-numbers {
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.info-numbers hr {
-  display: block;
+.row p {
   padding: 0;
   margin: 0;
+  color: rgb(153, 153, 153);
+  font-size: 15px;
+  position: relative;
+  top: 18px;
+}
+
+#price-of-work {
+  float: right !important;
+  width: fit-content;
+  position: relative;
+  top: 34px;
+  right: 10px;
+  color: rgb(153, 153, 153);
+}
+
+#milage-in-km {
+  float: right !important;
+  width: fit-content;
+  position: relative;
+  top: 34px;
+  right: 10px;
+  color: rgb(153, 153, 153);
+}
+
+.row textarea {
   width: 100%;
-  border: 1px solid rgb(30, 30, 30);
+  border-radius: 7px;
+  font-size: 18px;
+  color: rgb(245, 245, 245);
+  background-color: rgb(40, 40, 40);
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  vertical-align: top;
+  padding-left: 5px;
+  font-family: "Source Sans Pro";
+  resize: none;
 }
 
-.info-content {
+.last-row::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.last-row label {
+  width: fit-content;
+}
+
+#chars-left {
+  float: right;
+}
+
+#submit {
+  width: 160px;
+  border-radius: 7px;
+  cursor: pointer;
+  background-color: rgb(82, 82, 82);
+  color: white;
+  border: none;
+  transition: all 0.2s;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+  float: right;
+}
+
+#submit:hover {
+  background-color: orangered;
+}
+
+#writeError {
+  font-size: 20px;
+  float: left;
+  width: fit-content;
+  padding: 0;
+  margin: 0;
+  padding-top: 12px;
+  color: rgb(245, 245, 245);
+}
+
+.errors {
+  float: left;
   width: 100%;
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  align-content: space-between;
-  grid-gap: 50px;
+  margin-top: 20px;
 }
 
-.info-column {
-  text-align: center;
-}
-
-.info-column h1 {
-  color: rgb(245, 245, 245);
-  font-weight: normal;
-  font-size: 23px;
+.errors p {
   padding: 0;
-}
-
-.info-column p {
+  margin: 0;
+  font-size: 20px;
   color: rgb(245, 245, 245);
-  font-size: 21px;
+  position: relative;
+  top: 0px !important;
+}
+
+.errors hr {
+  border: 1px solid rgb(45, 45, 45);
+}
+
+.errors a {
+  padding-bottom: 20px;
+  font-size: 18px;
+  color: rgb(245, 245, 245);
+}
+
+.errors i {
+  color: rgb(255, 58, 58);
+}
+
+.car-upload-status {
+  font-size: 20px;
+  float: left;
   padding: 0;
+  margin: 0;
+  position: relative;
+  top: 10px;
 }
 
-/* Custom Scrollbar settings */
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
+.mod-upload-status .fa-circle-check {
+  color: rgb(0, 220, 10);
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: black;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgb(77, 77, 77);
-  border-radius: 0px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(114, 114, 114);
+.mod-upload-status .fa-circle-xmark {
+  color: rgb(255, 58, 58);
 }

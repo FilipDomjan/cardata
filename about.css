@@ -1,0 +1,222 @@
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: rgb(6, 6, 6);
+}
+
+.drop-btn {
+  text-transform: uppercase !important;
+}
+
+.about-container {
+  position: relative;
+  top: 90px;
+  width: 1400px;
+  min-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-bottom: 100px;
+}
+
+.about-container h1 {
+  color: rgb(245, 245, 245);
+  font-size: 50px;
+  font-weight: normal;
+  padding-top: 30px;
+  margin: 0;
+}
+
+.about-container hr {
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border: 1px solid rgb(54, 54, 54);
+}
+
+.about-us-para {
+  color: rgb(245, 245, 245);
+  font-size: 25px;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.about-us {
+  width: 100%;
+  text-align: right;
+  float: left;
+  margin-bottom: 100px;
+}
+
+.about-us-top {
+  margin-top: 100px;
+}
+
+.about-us .text {
+  width: 50%;
+  text-align: left;
+  float: left;
+}
+
+.about-us .text h2 {
+  color: white;
+  font-size: 30px;
+}
+
+.about-us .text p {
+  color: rgb(190, 190, 190);
+  font-size: 24px;
+}
+
+.about-us img {
+  width: 40%;
+  float: right;
+}
+
+.align-right .text {
+  float: right !important;
+}
+
+.align-right img {
+  float: left !important;
+}
+
+/* .text-changers {
+  text-align: center;
+  position: relative;
+}
+
+.text-changers a {
+  color: rgb(200, 200, 200);
+  border-bottom: 2px solid rgb(36, 36, 36);
+  padding: 10px 0px;
+  text-decoration: none;
+  font-size: 20px;
+  width: 25%;
+  float: left;
+  cursor: pointer;
+}
+
+.text-changers a:hover {
+  border-bottom: 2px solid rgb(100, 100, 100);
+}
+
+.underline {
+  position: absolute;
+  bottom: 0px;
+  left: 0%;
+  height: 2px;
+  width: 25%;
+  transition: all 0.3s;
+}
+.underline:before {
+  position: absolute;
+  content: "";
+  height: 2px;
+  left: 0;
+  width: 100%;
+  background: orangered;
+  transform: scaleX(1);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.text-changers::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.about-us {
+  width: 50%;
+  float: left;
+}
+
+.about-us h2 {
+  color: rgb(245, 245, 245);
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.about-us p {
+  color: rgb(170, 170, 170);
+  font-size: 24px;
+  padding-top: 10px;
+}
+
+.join-cardata {
+  width: fit-content;
+  float: right;
+  margin-top: 30px;
+  text-align: center;
+  background-color: rgb(20, 20, 20);
+  border-radius: 10px;
+  padding: 20px;
+  height: 200px;
+}
+
+.join-cardata button,
+.join-cardata a,
+.join-cardata p {
+  display: block;
+}
+
+.join-cardata p {
+  color: rgb(210, 210, 210);
+  font-size: 20px;
+}
+
+.join-cardata button {
+  outline: none;
+  background-color: transparent;
+  border: 2px solid white;
+  font-size: 21px;
+  color: white;
+  font-family: inherit;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 10px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.join-cardata button:hover {
+  background-color: white;
+  color: black;
+}
+
+.join-cardata a {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.join-cardata a:hover {
+  text-decoration: underline;
+}
+
+.about-container::after {
+  content: "";
+  display: table;
+  clear: both;
+} */

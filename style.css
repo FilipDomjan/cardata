@@ -1,426 +1,623 @@
 @font-face {
-    font-family: 'Source Sans Pro';
-    src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+  font-family: "Source Sans Pro";
+  src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
 }
 
 @keyframes arrow {
-    0%{
-        top: 94%;
-    }
-    20%{
-        top: 96%;
-    }
-    40%{
-        top: 95%;
-    }
-    50%{
-        top: 96%;
-    }
-    90%{
-        top: 96%;
-    }
-    100%{
-        top: 94%;
-    }
+  0% {
+    top: 94%;
+  }
+  20% {
+    top: 96%;
+  }
+  40% {
+    top: 95%;
+  }
+  50% {
+    top: 96%;
+  }
+  90% {
+    top: 96%;
+  }
+  100% {
+    top: 94%;
+  }
 }
 
-html, body{
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'Source Sans Pro', sans-serif;
-    background-color: rgb(255, 255, 255);
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
-/* CSS For the navbar */
-
-.navbar{
-    background-color: rgb(0, 0, 0);
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: rgb(255, 255, 255);
 }
 
-.navbar img{
-    float: left;
-    color: rgb(255, 255, 255);
-    margin-left: 20px;
-    margin-top: 18px;
-    width: 150px;
-    cursor: pointer;
+.clear {
+  clear: both;
 }
 
-.links{
-    float: right;
-    margin-right: 0px;
-    margin-top: 0px;
+.container {
+  width: 1400px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.links a{
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    float: left;
-    padding: 35px 25px;
-    background-color: transparent;
-    transition: all 0.1s;
-    box-sizing: border-box;
+.drop-btn {
+  text-transform: uppercase !important;
 }
 
-.links a:hover{
-    background-color: rgb(124, 124, 124);
+/* Update screen */
+
+.news {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  z-index: 9999999999999;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-.login{
-    border-left: 1px solid rgb(27, 27, 27);
+.news-container {
+  width: 600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(18, 18, 18);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 10px;
 }
 
-.login i{
-    padding-right: 5px;
+.whats-new {
+  margin-bottom: 10px;
 }
 
-.logout{
-    border-left: 1px solid rgb(27, 27, 27);
+.whats-new p {
+  padding: 0;
+  margin: 0;
+  font-size: 21px;
+  color: rgb(200, 200, 200);
+  font-weight: bold;
+  padding-bottom: 5px;
 }
 
-.logout i{
-    padding-right: 5px;
+.whats-new span {
+  font-size: 15px;
+  color: rgb(120, 120, 120);
 }
 
-.links .active{
-    box-shadow:inset 0px -3px 0px 0px orangered;
-    cursor: pointer;
+.news-image {
+  width: 100%;
+  padding-bottom: 5px;
 }
 
+.news-image img {
+  width: 100%;
+}
+
+.news-content {
+  max-height: 258px;
+  overflow-y: scroll;
+}
+
+.update-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.update-item h1 {
+  color: rgb(245, 245, 245);
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.update-item hr {
+  border: 1px solid rgb(30, 30, 30);
+}
+
+.update-item {
+  display: block;
+}
+
+.update-item ul {
+  padding: 0;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.update-item li {
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  color: rgb(200, 200, 200);
+  padding-bottom: 5px;
+}
+
+.update-item b {
+  color: rgb(230, 230, 230);
+}
+
+.update-item span {
+  color: orangered;
+  font-weight: bold;
+}
+
+.exit-button {
+  width: 100%;
+  background-color: rgb(18, 18, 18);
+  text-align: right;
+  height: 50px;
+}
+
+.exit-button button {
+  outline: none;
+  border: none;
+  background-color: orangered;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0px orangered;
+  color: rgb(245, 245, 245);
+  position: relative;
+  font-size: 17px;
+  font-family: inherit;
+  font-weight: bold;
+  top: 10px;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.exit-button button:hover {
+  box-shadow: 0px 0px 8px orangered;
+  background-color: rgb(233, 62, 0);
+}
 
 /* CSS For the showcase */
 
-.showcase{
-    width: 100%;
-    min-height: 980px;
-    background-image: url("img/amg_gt_bs.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
+.showcase {
+  width: 100%;
+  min-height: 783px;
+  max-height: 783px;
+  padding-top: 10px;
+  background-image: url("img/showcase/showcase-wp.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
 }
 
-.showcase-container{
-    width: 700px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+.slogan {
+  width: 700px;
+  text-align: left;
+  position: relative;
+  top: 20px;
 }
 
-.showcase-container h1{
-    color: white;
-    font-size: 120px;
-    padding: 0;
-    margin: 0;
-    padding-bottom: 20px;
+.slogan h1 {
+  color: white;
+  font-size: 90px;
 }
 
-.scroll-down{
-    position: absolute;
-    top: 96%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: arrow infinite 4s;
+.bottom-text {
+  width: 700px;
+  text-align: left;
+  position: absolute;
+  bottom: 40px;
 }
 
-.scroll-down i{
-    font-size: 28px;
-    color: orangered;
+.bottom-text p {
+  color: rgb(216, 216, 216);
+  font-size: 19px;
+  line-height: 150%;
 }
 
-/* Style the buttons with uni style */
-
-.showcase-container button{
-    width: 170px;
-    height: 60px;
-    border: none;
-    border-radius: 30px;
-    color: white;
-    padding: 0px;
-    margin: 0;
-    margin-left: 5px;
-    margin-right: 5px;
-    font-size: 18px;
-    cursor: pointer;
+.bottom-text button {
+  outline: none;
+  border: none;
+  background-color: white;
+  padding: 8px 26px;
+  border-radius: 4px;
+  color: black;
+  font-family: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-/* Style the buttons individually */
-
-.showcase-container .analytics{
-    background-color: orangered;
-    transition: all 0.2s;
-}
-
-.showcase-container .analytics:hover{
-    background-color: rgb(216, 58, 0);
-}
-
-.showcase-container .other{
-    background-color: rgb(63, 63, 63);
-    transition: all 0.2s;
-}
-
-.showcase-container .other:hover{
-    background-color: rgb(109, 109, 109);
+.bottom-text button:hover {
+  background-color: orangered;
+  color: white;
 }
 
 /* CSS For everything under the showcase */
 
-.container{
-    width: 100%;
-    text-align: center;
+.who-are-we {
+  font-size: 0px;
+  min-height: 783px;
+  max-height: 783px;
+  width: 100%;
+  background-color: rgb(6, 6, 6);
 }
 
-.who-are-we{
-    font-size: 0px;
+.who-are-we hr {
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border: 1px solid rgb(54, 54, 54);
 }
 
-.who-are-we h1{
-    font-size: 60px;
-    padding: 0;
-    margin: 0;
-    padding-top: 50px;
+.who-are-we h1 {
+  font-size: 40px;
+  padding: 0;
+  margin: 0;
+  padding-top: 40px;
+  color: white;
 }
 
-.what-is-cardata{
-    font-size: 25px;
-    color: black;
-    width: 650px;
-    text-align: center;
-    margin: 0;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
+.who-are-we p {
+  font-size: 21px;
+  margin-bottom: 20px;
+  color: white;
 }
 
-.tile{
-    width: 323px;
-    height: 300px;
-    background-color: white;
-    border-radius: 12px;
-    margin: 70px;
-    margin-bottom: 20px;
-    margin-top: 40px;
-    display: inline-block;
-    vertical-align: middle;
+.what-is-cardata {
+  font-size: 25px;
+  color: black;
+  width: 650px;
+  text-align: center;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
 }
 
-.tile i{
-    font-size: 45px;
-    padding-top: 30px;
+.tiles {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-content: space-between;
+  grid-gap: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.tile h2{
-    font-size: 25px;
-    padding: 0;
-    margin: 0;
-    padding-top: 20px;
+.tile {
+  width: 400px;
+  height: 290px;
+  background-color: rgb(15, 15, 15);
+  border-radius: 12px;
+  margin-top: 40px;
+  vertical-align: middle;
 }
 
-.tile p{
-    box-sizing: border-box;
-    padding: 30px 5px 0px 5px;
-    margin: 0;
-    font-size: 18px;
-    text-justify:distribute-all-lines;
+.icon {
+  width: 60px;
+  height: 60px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  line-height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  bottom: 30px;
+  text-align: center;
 }
 
-
-.how-does-it-work{
-    width: 100%;
-    min-height: 600px;
-    background-image: url("img/squad_2_edited.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    text-align: center;
-    margin-top: 30px;
+.tile i {
+  font-size: 20px;
+  vertical-align: middle;
+  color: orangered;
 }
 
-.how-does-it-work h1{
-    font-size: 60px;
-    color: white;
-    padding: 0;
-    margin: 0;
-    padding-top: 40px;
-    padding-bottom: 60px;
+.tile h2 {
+  font-size: 25px;
+  padding: 0;
+  margin: 0;
+  padding-top: 20px;
+  color: white;
 }
 
-.hdiw-column{
-    width: 330px;
-    min-height: 350px !important;
-    max-height: 350px !important;
-    display: inline-block;
-    border-right: 1px solid white;
-    vertical-align: top;
-    text-align: left;
-    padding: 0px 30px;
+.tile p {
+  box-sizing: border-box;
+  padding: 30px 20px 0px 20px;
+  margin: 0;
+  font-size: 18px;
+  text-justify: distribute-all-lines;
+  color: rgb(189, 189, 189);
 }
 
-.last-column{
-    border:0;
+/* Section 2 */
+
+.how-does-it-work {
+  width: 100%;
+  background-image: url("img/showcase/squad_2_bw.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 783px;
+  padding-bottom: 60px;
+  text-align: center;
+  position: relative;
 }
 
-.hdiw-column h2{
-    color: white;
-    font-size: 25px;
-    vertical-align: middle;
+.how-does-it-work hr {
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border: 1px solid rgb(54, 54, 54);
 }
 
-.hdiw-column p{
-    color: white;
-    font-size: 20px;
-    line-height: 130%;
+.how-does-it-work h1 {
+  font-size: 40px;
+  color: white;
+  padding: 0;
+  margin: 0;
+  padding-top: 40px;
 }
 
-.join-us{
-    text-align: center;
-    min-height: 350px;
+.how-does-it-work p {
+  color: white;
+  font-size: 21px;
+  padding-bottom: 20px;
 }
 
-.join-us h1{
-    font-size: 60px;
-    padding: 0;
-    margin: 0;
-    padding-top: 70px;
-    padding-bottom: 10px;
+#cardata-slides {
+  display: none;
 }
 
-.join-us-content p{
-    font-size: 23px;
-    padding: 0;
-    margin: 0;
+.content-switchers {
+  background-color: rgb(20, 20, 20);
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  width: 500px;
+  /* box-shadow: 0px 0px 6px #1b1b1b; */
+  position: relative;
 }
 
-.join-us-content button{
-    border: none;
-    border-radius: 25px;
-    width: 200px;
-    height: 50px;
-    background-color: orangered;
-    color: white;
-    font-size: 19px;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
+.switcher-buttons {
+  z-index: 9;
+  position: relative;
 }
 
-.join-us-content button:hover{
-    background-color: rgb(216, 58, 0);
+.switcher-buttons a {
+  width: 33.33%;
+  float: left;
+  cursor: pointer;
+  padding: 10px 0px;
+  color: rgb(116, 116, 116);
+  background-color: transparent;
+  z-index: 9;
+  transition: all 0.2s;
 }
 
-
-.footer{
-    background: rgb(0, 0, 0);
-    color: white;
-    height: 250px;
-    position: relative;
-    text-align: left;
+.switcher-buttons a:hover {
+  color: white;
 }
 
-.column{
-    display: inline-block;
-    vertical-align: middle;
-    min-height: 150px;
-    max-height: 150px;
-    padding: 10px 30px;
-    text-align: left;
+.active-switcher {
+  color: white !important;
 }
 
-.column h3{
-    font-size: 20px;
-    color: #8a8a8a;
+.highlight {
+  position: absolute;
+  left: 0%;
+  background-color: orangered;
+  box-shadow: 0px 0px 3px orangered;
+  width: 33.33%;
+  height: 100%;
+  border-radius: 20px;
+  transition: all 0.2s;
+  z-index: 7;
 }
 
-.column a{
-    color: rgb(204, 204, 204);
-    text-decoration: none;
-    font-size: 17px;
-    padding: 0;
-    margin: 0;
-    transition: all 0.2s;
+.content-switchers::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-.column a:hover{
-    color: orangered;
+.cardata-container {
+  width: 100%;
+  height: 600px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 55 !important;
+  position: relative;
 }
 
-.footer-content hr{
-    border: 1px solid rgb(63, 63, 63);
-    width: 98%;
-    box-sizing: border-box;
+.cardata-image {
+  float: left;
+  width: 35%;
+  height: 100%;
 }
 
-.footer-content p{
-    width: 600px;
-    padding-left: 30px;
-    padding-top: 10px;
+.cardata-image img {
+  width: 100%;
 }
 
-.back-to-top{
-    float: right;
-    padding-right: 30px;
-    padding-top: 30px;
+.cardata-description {
+  width: 55%;
+  text-align: left;
+  float: left;
+  margin-left: 80px;
 }
 
-.back-to-top a{
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    transition: all 0.2s;
+.cardata-description h1,
+.cardata-description p {
+  padding: 10px 0px;
+  margin: 0;
 }
 
-.back-to-top a i{
-    padding-right: 5px;
-    position: relative;
-    bottom: 0;
-    transition: all 0.2s;
-    color: white;
+.cardata-description button {
+  outline: none;
+  border: none;
+  background-color: orangered;
+  color: white;
+  border-radius: 25px;
+  padding: 15px 30px;
+  font-size: 16px;
+  margin-top: 20px;
+  transition: all 0.2s;
+  cursor: pointer;
 }
 
-.back-to-top a:hover{
-    color: orangered;
+.cardata-description button:hover {
+  background-color: rgb(207, 55, 0);
 }
 
-.back-to-top a:hover i{
-    color: orangered;
-    bottom: 3px;
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
 }
 
-.back-to-top::after{
-    clear: both;
-    content: "";
-    display: block;
+@-webkit-keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.join-us {
+  text-align: center;
+  min-height: 850px;
+  max-height: 850px;
+  width: 100%;
+  background-color: rgb(6, 6, 6);
+}
+
+.join-us hr {
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border: 1px solid rgb(54, 54, 54);
+}
+
+.join-us h1 {
+  font-size: 40px;
+  color: white;
+  padding: 0;
+  margin: 0;
+  padding-top: 40px;
+}
+
+.join-us p {
+  color: white;
+  font-size: 21px;
+  padding-bottom: 20px;
+}
+
+.extra-tiles {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  align-content: space-between;
+  grid-gap: 63px;
+  margin-top: 55px;
+}
+
+.extra-tile {
+  width: 300px;
+  background-color: rgb(19, 19, 19);
+  border-radius: 4px;
+  overflow: hidden;
+  max-height: 480px;
+  vertical-align: top;
+}
+
+.tile-down {
+  position: relative;
+  top: 40px;
+}
+
+.extra-tile img {
+  width: 100%;
+}
+
+.extra-tile h1 {
+  font-size: 24px;
+  padding: 10px 0px 0px 0px;
+  margin: 0;
+  color: rgb(236, 236, 236);
+}
+
+.extra-tile hr {
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border: 1px solid rgb(54, 54, 54);
+}
+
+.extra-tile p {
+  font-size: 17px;
+  padding: 20px;
+  margin: 0;
+  line-height: 150%;
+  color: rgb(189, 189, 189);
+}
 
 /* Custom Scrollbar settings */
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
-  
+
 /* Track */
 ::-webkit-scrollbar-track {
-    background: black;
+  background: black;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: rgb(77, 77, 77);
-    border-radius: 0px;
+  background: rgb(77, 77, 77);
+  border-radius: 0px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: rgb(114, 114, 114);
+  background: rgb(114, 114, 114);
 }

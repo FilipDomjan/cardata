@@ -1,0 +1,148 @@
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url(fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  background-color: rgb(6, 6, 6);
+}
+
+.drop-btn {
+  text-transform: uppercase !important;
+}
+
+.container {
+  width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100%;
+}
+
+.contact-container {
+  margin-top: 90px;
+  width: 100%;
+  text-align: center;
+}
+
+.contact-container h1 {
+  color: rgb(245, 245, 245);
+  font-size: 50px;
+  font-weight: normal;
+  padding-top: 30px;
+  margin: 0;
+}
+
+.contact-container hr {
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  border: 1px solid rgb(54, 54, 54);
+}
+
+.contact-container p {
+  color: rgb(245, 245, 245);
+  font-size: 25px;
+}
+
+.row {
+  position: relative;
+}
+
+.contact-form form input,
+.contact-form form textarea {
+  width: 100%;
+  height: 50px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  border-bottom: 2px solid rgb(110, 110, 110);
+  padding-left: 0px;
+  box-sizing: border-box;
+  color: white;
+  font-size: 19px;
+  font-family: inherit;
+}
+
+.contact-form form textarea {
+  resize: none;
+  padding-top: 10px;
+  height: 200px;
+}
+
+.contact-form form label {
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+}
+
+.contact-form .row {
+  margin-bottom: 30px;
+}
+
+#submit {
+  background-color: rgb(54, 54, 54);
+  box-shadow: 0px 0px 0px orangered;
+  border: none;
+  border-radius: 4px;
+  width: 150px;
+  float: left;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#submit:hover {
+  background-color: orangered;
+  box-shadow: 0px 0px 5px orangered;
+}
+
+/* Animated underline */
+
+.contact-form .underline {
+  position: absolute;
+  bottom: 0px;
+  height: 2px;
+  width: 100%;
+}
+
+.textarea-underline {
+  bottom: 4px !important;
+}
+
+.contact-form .underline:before {
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background: orangered;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+input:focus ~ .underline:before,
+textarea:focus ~ .underline::before {
+  transform: scaleX(1);
+}
+
+input:valid ~ .underline::before,
+textarea:valid ~ .underline::before {
+  transform: scaleX(1);
+  background: #0aff68;
+}
+
+/* Disable autofill background */
+
+.contact-form form input:-webkit-autofill,
+.contact-form form input:-webkit-autofill:hover,
+.contact-form form input:-webkit-autofill:focus,
+.contact-form form input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white !important;
+}

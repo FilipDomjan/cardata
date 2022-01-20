@@ -16,121 +16,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdn.rawgit.com/moment/moment/2.21.0/min/moment.min.js"></script>
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="fonts/fontawesome/css/all.css">
-    <title>CarData | Home</title>
+    <title>CarData | Dashboard</title>
 </head>
 <body>
-    <div class="navbar">
-        <img src="img/cardata_logo_white.png" alt="logo">
+    <div class="navbar not-fixed">
         <div class="links">
+            <img src="img/cardata_logo_white.png" alt="logo">
             <?php
                 error_reporting(0);
 
                 // Navigation bar items change wether the user is logged in or not
-                // If the user is logged in it will show users username and logout button
+                // If the user is logged in it will show users username, logout button and it will provide access to dashboard etc.
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='index.php'>Home</a>";
-                    echo "<a href='dashboard.php' class='active'>My CarData</a>";
-                    echo "<a href='#'>Contact</a>";
-                    echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
-                    echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
+                    echo "<a href='contact.php'>Contact</a>";
+                    echo "<a href='about.php' class='about'>About</a>";
+                    echo "<a href='#' class='active'>My Cardata</a>";
+                    echo "<div class='dropdown login-dropdown'>";
+                    echo "<button class='drop-btn login-btn'><i class='fa-solid fa-user'></i><i class='fa-solid fa-caret-down'></i></button>";
+                    echo "<div class='dropdown-content login-dropdown-content'>";
+                    echo "<div class='connection-status'>";
+                    echo "<p class='cs-user'>$username</p>";
+                    echo "<p class='cs-connected'><i class='fa-solid fa-circle'></i>Connected</p>";
+                    echo "</div>";
+                    echo "<hr>";
+                    echo "<a href='users/logout.php' class='logout'>Logout <i class='fa-solid fa-right-from-bracket'></i></a>"; 
+                    echo "</div>";
+                    echo "</div>";
                 }
                 // If not show original items
                 else{
-                    echo "<a class='active'>Home</a>";
-                    echo "<a href='#'>Contact</a>";
-                    echo "<a href='users/login.php'>Login</a>";
+                    echo "<a href='#' class='active'>Home</a>";
+                    echo "<a href='contact.php'>Contact</a>";
+                    echo "<a href='about.php' class='about'>About</a>";
+                    echo "<a href='users/register.php' class='login-links reg-link'>Register</a>";
+                    echo "<a href='users/login.php' class='login-links log-link'>Sign In</a>";
                 }
             ?>
         </div>
     </div>
-
+    
+    <!-- Mini navbar, only present in My Cardata sections -->
+    <div id="mini-navbar">
+        <div class="mini-links">
+            <div class="dropdown-mini">
+                <button class="drop-btn active-btn">Dashboard</button>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='my_cars.php'">My Cars</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_car.php">Add a car</a>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='service_book.php?carid=0'">Service Book</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_service.php">Add to Service Book</a>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='gas_data.php'">Gas Data</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_gas.php">Add to Gas Data</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Main container -->
     <div id="main">
-        <div class="page-name">
+        <div class="clear"></div>
+        <!-- <div class="page-name">
             <h3 class="page-name-text">Dashboard</h3>
             <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Dashboard</a></p>
         </div>
-        <div class="clear"></div>
-        <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
-            <div class="sidebar-items">
-                <a href="#"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
-                <a href="mycars.php"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
-                <a href="carmods.php?carid=0"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
-                <a href="addcar.php"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>
-            </div>
-        </nav>
+        <div class="clear"></div> -->
         <div class="main-content">
             <?php
                 // Connect to the main database holding user information
                 include("connect_server.php");
-
+                
                 // Get the current users username
                 $username = htmlspecialchars($_SESSION["username"]);
-
+                
                 // Select all the data from the database where the username is current users username
                 $query = "SELECT * FROM users WHERE username = '$username'";
                 $result = mysqli_query($db, $query);
-
-                // Get the first name so that we can show the welcome message
-                while($row = mysqli_fetch_assoc($result)){
-                    $firstname = $row["firstname"];
-                }
-
-                // Welcome message changes as the day progresses
-                $hour = date("H", time());
-                
-                // if($hour >= 4 && $hour <= 11){
-                //     echo "<h1>Good morning, $firstname</h1>";
-                // }
-                // elseif($hour >= 11 && $hour <= 19){
-                //     echo "<h1>Good afternoon, $firstname</h1>";
-                // }
-                // else{
-                //     echo "<h1>Good evening, $firstname</h1>";
-                // }
             ?>
-            <!-- <hr> -->
         </div>
         <div class="container">
-            <div class="car-data user">
-                <div class="car-data-content">
-                    <h2>User data</h2>
-                    <hr>
-                    <div class="column">
-                        <?php
-                            // Still connected to the main database, get all other information regarding the user
-                            $query = "SELECT * FROM users WHERE username = '$username'";
-                            $result = mysqli_query($db, $query);
-
-                            while($row = mysqli_fetch_assoc($result)){
-                                $usrid = $row["id"];
-                                $joined = $row["created_at"];
-                                $firstname = $row["firstname"];
-                                $lastname = $row["lastname"];
-                                $email = $row["email"];
-                            }
-                            
-                            // Display that information in the tile
-                            echo "<p>First name: $firstname</p>";
-                            echo "<p>Last name: $lastname</p>";
-                            echo "<p>E-mail: $email</p>";
-                            echo "<p>Username: $username</p>";
-                            echo "<p>Joined: $joined</p>";
-                        ?>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-            <div class="car-data">
-                <div class="car-data-content">
+            <div class="car-data-general">
+                <div class="car-data-general-content">
                     <!-- General Car Data holds some basic information, how many cars the user owns,
                     Total money spending, number of tunes/mods/repairs/other etc. -->
                     <h2>General Car Data</h2>
                     <hr>
-                    <div class="column">
+                    <div class="general-data-container">
                         <?php
 
                             // Now we connect to the users database
@@ -149,57 +135,46 @@
                                 exit();
                             }
 
-                            // Get number of cars
-
-                            $query = "SELECT * FROM cars";
-                            $result = mysqli_query($userdb, $query);
-
-                            $carnum = mysqli_num_rows($result);
-
-                            echo "<p>Total cars owned: $carnum</p>";
-
-                            // Get number of repairs
-                            $query = "SELECT * FROM mods WHERE repair_type = 'Repair'";
-                            $result = mysqli_query($userdb, $query);
-
-                            $repairnum = mysqli_num_rows($result);
-
-                            echo "<p>Repairs done: $repairnum</p>";
-
-                            // Get number of mods done
-                            
-                            $query = "SELECT * FROM mods WHERE repair_type = 'Mod'";
-                            $result = mysqli_query($userdb, $query);
-
-                            $modnum = mysqli_num_rows($result);
-
-                            echo "<p>Mods done: $modnum</p>";
-
-                            // Get number of tunes done
-
-                            $query = "SELECT * FROM mods WHERE repair_type = 'Tune'";
-                            $result = mysqli_query($userdb, $query);
-
-                            $tunenum = mysqli_num_rows($result);
-
-                            echo "<p>Tunes done: $tunenum</p>";
-
-                            // Get number of other stuff done to the car
-
-                            $query = "SELECT * FROM mods WHERE repair_type = 'Other'";
-                            $result = mysqli_query($userdb, $query);
-
-                            $othernum = mysqli_num_rows($result);
-
-                            echo "<p>Other stuff done: $othernum</p>";
-
                             // Total money spent
 
                             $query = "SELECT * FROM mods";
                             $result = mysqli_query($userdb, $query);
+
+                            function numberConverter($num){
+                                $pf = "";
+
+                                if($num >= 10000 && $num < 1000000){
+                                    $num = numberFormatPrecision(($num / 1000));
+                                    $pf = "K";
+                                }
+                                else if($num >= 1000000 && $num < 1000000000){
+                                    $num = numberFormatPrecision(($num / 1000000));
+                                    $pf = "M";
+                                }
+                                else if($num >= 1000000000){
+                                    $num = numberFormatPrecision(($num / 1000000000));
+                                    $pf = "T";
+                                }
+
+                                echo "<p>$num"."$pf"."€</p>";
+                            }
                             
+                            function numberFormatPrecision($number, $precision = 1, $separator = '.')
+                            {
+                                $numberParts = explode($separator, $number);
+                                $response = $numberParts[0];
+                                if (count($numberParts)>1 && $precision > 0) {
+                                    $response .= $separator;
+                                    $response .= substr($numberParts[1], 0, $precision);
+                                }
+                                return $response;
+                            }
                             if(mysqli_num_rows($result) == 0){
-                                echo "<p>Money spent: No money spent</p>";
+                                echo "<div class='general-data-item'>";
+                                echo "<p>Service spendings</p>";
+                                echo "<h1>0€</h1>";
+                                echo "<h2>0 HRK</h2>";
+                                echo "</div>";
                             }
                             else{
                                 $total = 0;
@@ -209,7 +184,7 @@
                                     $unit = $row["unit"];
                                     
                                     // Convert all units to HRK first
-                                    // This is why we let user select the currency in the mod adding section
+                                    // This is why we let user select the currency in the service adding section
                                     if(strtolower($unit) == "hrk"){
                                         $total += $value;
                                     }
@@ -223,219 +198,387 @@
                                     }
                                 
                                 // Convert to EUR
-                                $total_in_eur = number_format((float)$total / 7.5, 2, '.', '');
-                                $total = number_format((float)$total, 2, '.', '');
+                                $total_in_eur = numberFormatPrecision(((float)$total / 7.5));
+                                $total = numberFormatPrecision(((float)$total));
+                                $total_in_eur_k = 0;
+                                $postfix = "";
+                                $postfix_hrk = "";
                                 }
+
+
                                 // Show money spent in eur and hrk
-                                echo "<p>Money spent: $total_in_eur € ~ $total HRK</p>";
+                                echo "<div class='general-data-item'>";
+                                echo "<p>Service spendings</p>";
+                                if($total_in_eur >= 10000 && $total_in_eur < 1000000){
+                                    $total_in_eur = numberFormatPrecision(($total_in_eur / 1000));
+                                    $postfix = "K";
+                                }
+                                else if($total_in_eur >= 1000000 && $total_in_eur < 1000000000){
+                                    $total_in_eur = numberFormatPrecision(($total_in_eur / 1000000));
+                                    $postfix = "M";
+                                }
+                                else if($total_in_eur >= 1000000000){
+                                    $total_in_eur = numberFormatPrecision(($total_in_eur / 1000000000));
+                                    $postfix = "T";
+                                }
+
+                                if($total >= 10000 && $total < 1000000){
+                                    $total = numberFormatPrecision(($total / 1000));
+                                    $postfix_hrk = "K";
+                                }
+                                else if($total >= 1000000 && $total < 1000000000){
+                                    $total = numberFormatPrecision(($total / 1000000));
+                                    $postfix_hrk = "M";
+                                }
+                                else if($total >= 1000000000){
+                                    $total = numberFormatPrecision(($total / 1000000000));
+                                    $postfix_hrk = "T";
+                                }
+                                echo "<h1>$total_in_eur"."$postfix"."€</h1>";
+                                echo "<h2>$total"."$postfix_hrk"." HRK</h2>";
+                                echo "</div>";
+
+                                
                             }
-
-                        ?>
-                    </div>
-                    <div class="column column-two">
-                        <?php
-
-                            // Get most repaired car
-
-                            $query = "SELECT * FROM mods";
+                            $query = "SELECT * FROM gas";
                             $result = mysqli_query($userdb, $query);
 
-                            $car_array = array();
-
-                            while($row = mysqli_fetch_assoc($result)){
-                                $car_id = $row["carid"];
-
-                                $query2 = "SELECT * FROM mods WHERE carid = $car_id AND repair_type = 'Repair'";
-                                $result2 = mysqli_query($userdb, $query2);
-                                
-                                $num_row = mysqli_num_rows($result2);
-
-                                if($num_row > 0){
-                                    $car_array[$car_id] = $num_row;
-                                }
-                            }
-
-                            if(empty($car_array)){
-                                echo "<p>Most repaired car: No repaired cars</p>";
+                            if(mysqli_num_rows($result) == 0){
+                                echo "<div class='general-data-item'>";
+                                echo "<p>Gas spendings</p>";
+                                echo "<h1>0€</h1>";
+                                echo "<h2>0 HRK</h2>";
+                                echo "</div>";
                             }
                             else{
-                                $max_value = max($car_array);
-                                $key = array_search($max_value, $car_array);
-    
-                                $query = "SELECT * FROM cars WHERE id=$key";
-                                $result = mysqli_query($userdb, $query);
-    
+                                $total_gas = 0;
+                            
                                 while($row = mysqli_fetch_assoc($result)){
-                                    $year = $row["model_year"];
-                                    $manuf = $row["manufacturer"];
-                                    $model = $row["model"];
-    
-                                    echo "<p>Most repaired car: $year $manuf $model</p>";
-                                }
-                            }
-
-                            // Get most modded car
-
-                            $query = "SELECT * FROM mods";
-                            $result = mysqli_query($userdb, $query);
-
-                            $car_array2 = array();
-
-                            while($row = mysqli_fetch_assoc($result)){
-                                $car_id = $row["carid"];
-
-                                $query2 = "SELECT * FROM mods WHERE carid = $car_id AND repair_type = 'Mod'";
-                                $result2 = mysqli_query($userdb, $query2);
+                                    $value_gas = $row["price"];
+                                    $unit = $row["unit"];
+                                    
+                                    // Convert all units to HRK first
+                                    // This is why we let user select the currency in the service adding section
+                                    if(strtolower($unit) == "hrk"){
+                                        $total_gas += $value_gas;
+                                    }
+                                    elseif(strtolower($unit) == "eur"){
+                                        $value_gas *= 7.5;
+                                        $total_gas += $value_gas;
+                                    }
+                                    elseif(strtolower($unit) == "usd"){
+                                        $value_gas *= 6.5;
+                                        $total_gas += $value_gas;
+                                    }
                                 
-                                $num_row = mysqli_num_rows($result2);
-
-                                if($num_row > 0){
-                                    $car_array2[$car_id] = $num_row;
+                                // Convert to EUR
+                                $total_gas_in_eur = numberFormatPrecision(((float)$total_gas / 7.5));
+                                $total_gas = numberFormatPrecision(((float)$total_gas));
+                                $total_gas_in_eur_k = 0;
+                                $postfix_gas = "";
+                                $postfix_gas_hrk = "";
                                 }
-                            }
 
-                            if(empty($car_array2)){
-                                echo "<p>Most modded car: No modded cars</p>";
-                            }
-                            else{
-                                $max_value = max($car_array2);
-                                $key = array_search($max_value, $car_array2);
-    
-                                $query = "SELECT * FROM cars WHERE id=$key";
-                                $result = mysqli_query($userdb, $query);
-    
-                                while($row = mysqli_fetch_assoc($result)){
-                                    $year = $row["model_year"];
-                                    $manuf = $row["manufacturer"];
-                                    $model = $row["model"];
-    
-                                    echo "<p>Most modded car: $year $manuf $model</p>";
+
+                                // Show money spent in eur and hrk
+                                echo "<div class='general-data-item'>";
+                                echo "<p>Gas spendings</p>";
+                                if($total_gas_in_eur >= 10000 && $total_gas_in_eur < 1000000){
+                                    $total_gas_in_eur = numberFormatPrecision(($total_gas_in_eur / 1000));
+                                    $postfix_gas = "K";
                                 }
-                            }
-
-                            // Get most tuned car
-
-                            $query = "SELECT * FROM mods";
-                            $result = mysqli_query($userdb, $query);
-
-                            $car_array3 = array();
-
-                            while($row = mysqli_fetch_assoc($result)){
-                                $car_id = $row["carid"];
-
-                                $query2 = "SELECT * FROM mods WHERE carid = $car_id AND repair_type = 'Tune'";
-                                $result2 = mysqli_query($userdb, $query2);
-                                
-                                $num_row = mysqli_num_rows($result2);
-
-                                if($num_row > 0){
-                                    $car_array3[$car_id] = $num_row;
+                                else if($total_gas_in_eur >= 1000000 && $total_gas_in_eur < 1000000000){
+                                    $total_gas_in_eur = numberFormatPrecision(($total_gas_in_eur / 1000000));
+                                    $postfix_gas = "M";
                                 }
-                            }
-
-                            if(empty($car_array3)){
-                                echo "<p>Most tuned car: No tuned cars</p>";
-                            }
-                            else{
-                                $max_value = max($car_array3);
-                                $key = array_search($max_value, $car_array3);
-    
-                                $query = "SELECT * FROM cars WHERE id=$key";
-                                $result = mysqli_query($userdb, $query);
-    
-                                while($row = mysqli_fetch_assoc($result)){
-                                    $year = $row["model_year"];
-                                    $manuf = $row["manufacturer"];
-                                    $model = $row["model"];
-    
-                                    echo "<p>Most tuned car: $year $manuf $model</p>";
+                                else if($total_gas_in_eur >= 1000000000){
+                                    $total_gas_in_eur = numberFormatPrecision(($total_gas_in_eur / 1000000000));
+                                    $postfix_gas = "T";
                                 }
+
+                                if($total_gas >= 10000 && $total_gas < 1000000){
+                                    $total_gas = numberFormatPrecision(($total_gas / 1000));
+                                    $postfix_gas_hrk = "K";
+                                }
+                                else if($total_gas >= 1000000 && $total_gas < 1000000000){
+                                    $total_gas = numberFormatPrecision(($total_gas / 1000000));
+                                    $postfix_gas_hrk = "M";
+                                }
+                                else if($total_gas >= 1000000000){
+                                    $total_gas = numberFormatPrecision(($total_gas / 1000000000));
+                                    $postfix_gas_hrk = "T";
+                                }
+                                echo "<h1>$total_gas_in_eur"."$postfix_gas"."€</h1>";
+                                echo "<h2>$total_gas"."$postfix_gas_hrk"." HRK</h2>";
+                                echo "</div>";
                             }
 
-                            // Get which money user spent the most money on
+                            // Get number of cars
 
                             $query = "SELECT * FROM cars";
                             $result = mysqli_query($userdb, $query);
 
-                            $car_array4 = array();
+                            $carnum = mysqli_num_rows($result);
 
-                            while($row = mysqli_fetch_assoc($result)){
-                                $car_id = $row["id"];
+                            echo "<div class='general-data-item'>";
+                            echo "<p>Total cars owned</p>";
+                            echo "<h1>$carnum</h1>";
+                            echo "</div>";
 
-                                $query2 = "SELECT carid, price, unit FROM mods WHERE carid=$car_id";
-                                $result2 = mysqli_query($userdb, $query2);
+                            
 
-                                $total = 0;
+                            // Get number of repairs
+                            $query = "SELECT * FROM mods WHERE repair_type = 'Repair'";
+                            $result = mysqli_query($userdb, $query);
 
-                                while($row2 = mysqli_fetch_assoc($result2)){
-                                    $price = $row2["price"];
-                                    $unit = $row2["unit"];
-                                    $carid = $row2["carid"];
-    
-                                    if(strtolower($unit) == "hrk"){
-                                        $total += $price;
-                                    }
-                                    elseif(strtolower($unit) == "eur"){
-                                        $price *= 7.5;
-                                        $total += $price;
-                                    }
-                                    elseif(strtolower($unit) == "usd"){
-                                        $price *= 6.5;
-                                        $total += $price;
-                                    }
-                                }
+                            $repairnum = mysqli_num_rows($result);
 
-                                $total_in_eur = number_format((float)$total / 7.5, 2, '.', '');
+                            echo "<div class='general-data-item'>";
+                            echo "<p>Repairs</p>";
+                            echo "<h1>$repairnum</h1>";
+                            echo "</div>";
 
-                                $car_array4[$car_id] = $total_in_eur;
-                
-                            }
+                            // Get number of mods done
+                            
+                            $query = "SELECT * FROM mods WHERE repair_type = 'Mod'";
+                            $result = mysqli_query($userdb, $query);
 
-                            if(empty($car_array4) || max($car_array4) == 0){
-                                echo "<p>Most money spent on: No money spent on cars</p>";
-                            }
-                            else{
-                                $max_value = max($car_array4);
-                                $key = array_search($max_value, $car_array4);
-    
-                                $query = "SELECT * FROM cars WHERE id=$key";
-                                $result = mysqli_query($userdb, $query);
-    
-                                while($row = mysqli_fetch_assoc($result)){
-                                    $year = $row["model_year"];
-                                    $manuf = $row["manufacturer"];
-                                    $model = $row["model"];
-                                    
-                                    echo "<p>Most money spent on: $year $manuf $model<br>($max_value €)</p>";
-                                }
-                            }
+                            $modnum = mysqli_num_rows($result);
+
+                            echo "<div class='general-data-item'>";
+                            echo "<p>Mods</p>";
+                            echo "<h1>$modnum</h1>";
+                            echo "</div>";
+
+                            // Get number of tunes done
+
+                            $query = "SELECT * FROM mods WHERE repair_type = 'Tune'";
+                            $result = mysqli_query($userdb, $query);
+
+                            $tunenum = mysqli_num_rows($result);
+
+                            echo "<div class='general-data-item'>";
+                            echo "<p>Tunes</p>";
+                            echo "<h1>$tunenum</h1>";
+                            echo "</div>";
+
+                            // Get number of other stuff done to the car
+
+                            $query = "SELECT * FROM mods WHERE repair_type = 'Other'";
+                            $result = mysqli_query($userdb, $query);
+
+                            $othernum = mysqli_num_rows($result);
+
+                            echo "<div class='general-data-item'>";
+                            echo "<p>Other</p>";
+                            echo "<h1>$othernum</h1>";
+                            echo "</div>";
                         ?>
                     </div>
                     <div class="clear"></div>
                 </div>
             </div>
-            <div class="car-data">
-                <!-- Create a canvas for weekly spending report -->
-                <div class="car-data-content">
-                    <h2>Weekly report</h2>
-                    <hr>
-                    <div class="chart-canvas">
-                        <canvas id="WeeklyExpensesByCategory" style="width: 100%; height: 500px;"></canvas>
-                    </div>
-                </div>
+    
+    <!-- Monthly expenses chart data -->
+    <?php
+        $monthlyMods = "";
+        $monthlyRepairs = "";
+        $monthlyTunes = "";
+        $monthlyOther = "";
+        $expenses_per_day = [];
+
+        $totalMonthlyMods = 0;
+        $totalMonthlyRepairs = 0;
+        $totalMonthlyTunes = 0;
+        $totalMonthlyOther = 0;
+
+        // Get all the expenses on Mods for the current month
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE MONTH(done_at) = MONTH(CURRENT_DATE()) AND YEAR(done_at) = YEAR(CURRENT_DATE()) AND repair_type = 'Mod';";
+        $result = mysqli_query($userdb, $query);
+
+        $current_month = date("m");
+        $current_year = date("Y");
+        $days_in_month = cal_days_in_month(CAL_GREGORIAN, $current_month, $current_year);
+
+        // Add 0 for all days below 10
+        for($i = 1; $i <= $days_in_month; $i++){
+            $expenses_per_day[$i] = 0;
+        }
+
+        while($row = mysqli_fetch_assoc($result)){
+            $done_at = $row["done_at"];
+            $price = $row["price"];
+            $unit = $row["unit"];
+            $total = convertUnit($price, $unit);
+            $total = convertToEur($total);
+
+
+            $done_at_converted = date("d", strtotime($done_at));
+
+            if($done_at_converted < 10){
+                $done_at_converted = intval($done_at_converted);
+            }
+            
+            $expenses_per_day[$done_at_converted] += $total;
+        }
+
+        foreach($expenses_per_day as $val){
+            $monthlyMods .= "$val, ";
+            $totalMonthlyMods += $val;
+        }
+
+        $monthlyMods.trim($monthlyMods, ",");
+
+
+        // Get all the expenses on Repairs for the current month
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE MONTH(done_at) = MONTH(CURRENT_DATE()) AND YEAR(done_at) = YEAR(CURRENT_DATE()) AND repair_type = 'Repair';";
+        $result = mysqli_query($userdb, $query);
+
+        $current_month = date("m");
+        $current_year = date("Y");
+        $days_in_month = cal_days_in_month(CAL_GREGORIAN, $current_month, $current_year);
+
+        for($i = 1; $i <= $days_in_month; $i++){
+            $expenses_per_day[$i] = 0;
+        }
+
+        while($row = mysqli_fetch_assoc($result)){
+            $done_at = $row["done_at"];
+            $price = $row["price"];
+            $unit = $row["unit"];
+            $total = convertUnit($price, $unit);
+            $total = convertToEur($total);
+
+            $done_at_converted = date("d", strtotime($done_at));
+            
+            if($done_at_converted < 10){
+                $done_at_converted = intval($done_at_converted);
+            }
+
+            $expenses_per_day[$done_at_converted] += $total;
+        }
+
+        foreach($expenses_per_day as $val){
+            $monthlyRepairs .= "$val, ";
+            $totalMonthlyRepairs += $val;
+        }
+
+        $monthlyRepairs.trim($monthlyRepairs, ",");
+
+        // Get all the expenses on Tunes for the current month
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE MONTH(done_at) = MONTH(CURRENT_DATE()) AND YEAR(done_at) = YEAR(CURRENT_DATE()) AND repair_type = 'Tune';";
+        $result = mysqli_query($userdb, $query);
+
+        $current_month = date("m");
+        $current_year = date("Y");
+        $days_in_month = cal_days_in_month(CAL_GREGORIAN, $current_month, $current_year);
+
+        for($i = 1; $i <= $days_in_month; $i++){
+            $expenses_per_day[$i] = 0;
+        }
+
+        while($row = mysqli_fetch_assoc($result)){
+            $done_at = $row["done_at"];
+            $price = $row["price"];
+            $unit = $row["unit"];
+            $total = convertUnit($price, $unit);
+            $total = convertToEur($total);
+
+            $done_at_converted = date("d", strtotime($done_at));
+
+            if($done_at_converted < 10){
+                $done_at_converted = intval($done_at_converted);
+            }
+
+            $expenses_per_day[$done_at_converted] += $total;
+        }
+
+        foreach($expenses_per_day as $val){
+            $monthlyTunes .= "$val, ";
+            $totalMonthlyTunes += $val;
+        }
+
+        $monthlyTunes.trim($monthlyTunes, ",");
+
+        // Get all the expenses on Other for the current month
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE MONTH(done_at) = MONTH(CURRENT_DATE()) AND YEAR(done_at) = YEAR(CURRENT_DATE()) AND repair_type = 'Other';";
+        $result = mysqli_query($userdb, $query);
+
+        $current_month = date("m");
+        $current_year = date("Y");
+        $days_in_month = cal_days_in_month(CAL_GREGORIAN, $current_month, $current_year);
+
+        for($i = 1; $i <= $days_in_month; $i++){
+            $expenses_per_day[$i] = 0;
+        }
+
+        while($row = mysqli_fetch_assoc($result)){
+            $done_at = $row["done_at"];
+            $price = $row["price"];
+            $unit = $row["unit"];
+            $total = convertUnit($price, $unit);
+            $total = convertToEur($total);
+
+            $done_at_converted = date("d", strtotime($done_at));
+
+            if($done_at_converted < 10){
+                $done_at_converted = intval($done_at_converted);
+            }
+
+            $expenses_per_day[$done_at_converted] += $total;
+        }
+
+        foreach($expenses_per_day as $val){
+            $monthlyOther .= "$val, ";
+            $totalMonthlyOther += $val;
+        }
+
+        $monthlyOther.trim($monthlyOther, ",");
+    ?>
+
+    <div class="car-data-charts monthly-chart">
+        <!-- Create a canvas for monthly spending report -->
+        <div class="car-data-monthly-content">
+            <h2>Monthly Services Report</h2>
+            <hr>
+            <div class="chart-switchers">
+                <button id="all-currentmonth">All</button>
+                <button id="mods-currentmonth">Mods</button>
+                <button id="repairs-currentmonth">Repairs</button>
+                <button id="tunes-currentmonth">Tunes</button>
+                <button id="other-currentmonth">Other</button>
             </div>
-            <div class="car-data">
-                <!-- Create a canvas for monthly spending report -->
-                <div class="car-data-content">
-                    <h2>Monthly report</h2>
-                    <hr>
-                    <div class="chart-canvas">
-                        <canvas id="MonthlyExpensesByCategory" style="width: 100%; height: 500px;"></canvas>
+            <div class="chart-canvas">
+                <canvas id="CurrentMonthExpensesByCategory" style="width: 100%; height: 500px;"></canvas>
+            </div>
+            <div class="info-numbers">
+                <hr class="info-wrapper">
+                <div class="info-content">
+                    <div class="info-column top-hr">
+                        <h1>Total</h1>
+                        <?php numberConverter(($totalMonthlyMods + $totalMonthlyRepairs + $totalMonthlyTunes + $totalMonthlyOther)) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Mods</h1>
+                        <?php numberConverter($totalMonthlyMods) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Repairs</h1>
+                        <?php numberConverter($totalMonthlyRepairs) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Tunes</h1>
+                        <?php numberConverter($totalMonthlyTunes) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Other</h1>
+                        <?php numberConverter($totalMonthlyOther) ?>
                     </div>
                 </div>
+                <hr class="info-wrapper">
             </div>
         </div>
-    </div>
+    </div>                        
 
     <!-- Get the weekly data for the chart from the MySQL Database for the last week of users activity -->
     <?php
@@ -454,6 +597,11 @@
         $friTotalMods = 0;
         $satTotalMods = 0;
         $sunTotalMods = 0;
+
+        $totalWeeklyMods = 0;
+        $totalWeeklyRepairs = 0;
+        $totalWeeklyTunes = 0;
+        $totalWeeklyOther = 0;
         
         while($row = mysqli_fetch_assoc($result)){
             $price = $row["price"];
@@ -461,6 +609,9 @@
             // Format the date to show day name of the given date
             $date = date_create($row["done_at"]);
             $day = date_format($date, "D");
+
+            $conv = convertUnit($price, $unit);
+            $totalWeeklyMods += $conv;
 
             // Check whats the day name and calculate spending for that day
             // Then sort it into variables
@@ -578,6 +729,9 @@
             $date = date_create($row["done_at"]);
             $day = date_format($date, "D");
 
+            $conv = convertUnit($price, $unit);
+            $totalWeeklyRepairs += $conv;
+
             if($day == "Mon"){
                 if(strtolower($unit) == "hrk"){
                     $monTotalRepairs += $price;
@@ -691,6 +845,9 @@
             $date = date_create($row["done_at"]);
             $day = date_format($date, "D");
 
+            $conv = convertUnit($price, $unit);
+            $totalWeeklyTunes += $conv;
+
             if($day == "Mon"){
                 if(strtolower($unit) == "hrk"){
                     $monTotalTunes += $price;
@@ -803,6 +960,9 @@
             $unit = $row["unit"];
             $date = date_create($row["done_at"]);
             $day = date_format($date, "D");
+
+            $conv = convertUnit($price, $unit);
+            $totalWeeklyOther += $conv;
 
             if($day == "Mon"){
                 if(strtolower($unit) == "hrk"){
@@ -1002,112 +1162,73 @@
         $weeklyOnOther = trim($weeklyOnOther, ",");
     ?>
 
-    <!-- Code for the weekly expenses chart -->
-    <script>
+    <div class="car-data-charts weekly-chart">
+        <!-- Create a canvas for weekly spending report -->
+        <div class="car-data-weekly-content">
+            <h2>7-Day Services Report</h2>
+            <hr>
+            <div class="chart-switchers">
+                <button id="all">All</button>
+                <button id="mods">Mods</button>
+                <button id="repairs">Repairs</button>
+                <button id="tunes">Tunes</button>
+                <button id="other">Other</button>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="WeeklyExpensesByCategory" style="width: 100%; height: 500px;"></canvas>
+            </div>
+            <div class="info-numbers">
+                <hr class="info-wrapper">
+                <div class="info-content">
+                    <?php
+                        $totalWeekly = convertToEur(($totalWeeklyMods + $totalWeeklyRepairs + $totalWeeklyTunes + $totalWeeklyOther));
+                        $totalWeeklyMods = convertToEur($totalWeeklyMods);
+                        $totalWeeklyRepairs = convertToEur($totalWeeklyRepairs);
+                        $totalWeeklyTunes = convertToEur($totalWeeklyTunes);
+                        $totalWeeklyOther = convertToEur($totalWeeklyOther);
+                    ?>
 
-        // Format the day to our liking
-        function formatDate(date){
-        var dd = date.getDate();
-        var mm = date.getMonth()+1;
-        var yyyy = date.getFullYear();
-        if(dd<10) {dd='0'+dd}
-        if(mm<10) {mm='0'+mm}
-        date = mm+'/'+dd+'/'+yyyy;
-        return date
-        }
+                    <div class="info-column top-hr">
+                        <h1>Total</h1>
+                        <?php numberConverter($totalWeekly) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Mods</h1>
+                        <?php numberConverter($totalWeeklyMods) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Repairs</h1>
+                        <?php numberConverter($totalWeeklyRepairs) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Tunes</h1>
+                        <?php numberConverter($totalWeeklyTunes) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Other</h1>
+                        <?php numberConverter($totalWeeklyOther) ?>
+                    </div>
+                </div>
+                <hr class="info-wrapper">
+            </div>
+        </div>
+    </div>
 
-        // Get the name of the day on the given date
-        function getDayName(dateStr, locale)
-        {
-            var date = new Date(dateStr);
-            return date.toLocaleDateString(locale, { weekday: 'long' });        
-        }
-
-        // Get and insert last 7 days from the current day in the array (including the current day)
-        days = [];
-        for(var i = 6; i >= 0; i--){
-            var d = new Date();
-            d.setDate(d.getDate() - i);
-            d = formatDate(d)
-            day = getDayName(d, "EN");
-            days.push(day);
-        }
-
-        days.join(',');
-
-        var weekly = document.getElementById('WeeklyExpensesByCategory').getContext('2d');
-
-        Chart.defaults.global.legend.labels.usePointStyle = true;
-
-        // Create a bar chart with the data gathered with the previous code
-        let barChart = new Chart(weekly, {
-            type: "bar",
-            data: {
-                labels: days,
-                datasets: [{
-                    data: [<?php echo $weeklyOnMods?>],
-                    borderColor: "#00a2ff",
-                    backgroundColor: "rgba(0, 162, 255, 1)",
-                    label: "Mods",
-                    fill: true
-                }, {
-                    data: [<?php echo $weeklyOnRepairs?>],
-                    borderColor: "#b300ff",
-                    backgroundColor: "rgba(179, 0, 255, 1)",
-                    label: "Repairs",
-                    fill: true
-                }, {
-                    data: [<?php echo $weeklyOnTunes?>],
-                    borderColor: "#ff003c",
-                    backgroundColor: "rgba(255, 0, 60, 1)",
-                    label: "Tunes",
-                    fill: true
-                }, {
-                    data: [<?php echo $weeklyOnOther?>],
-                    borderColor: "#00ff37",
-                    backgroundColor: "rgba(0, 255, 55, 1)",
-                    label: "Other",
-                    fill: true
-                }]
-            },
-            options: {
-                legend: {
-                    display: true, 
-                },
-                scales: {
-                    yaxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            callback: function(value, index, values){
-                                return value + ' EUR';
-                            }
-                        }
-                    }]
-                },
-                title: {
-                    display: true,
-                    text: "Spending in EUR for the last 7 Days",
-                    fontSize: 20,
-                },
-                tooltips: {
-                    callbacks: {
-                        label: (item) => `${item.yLabel} EUR`,
-                    }
-                }
-            }
-        });
-    </script>
-
-    <!-- Get the monthly expenses data for the chart from the MySQL Database for the last 3 months of users spending activity -->
+    <!-- Get the 3 month expenses data for the chart from the MySQL Database for the last 3 months of users spending activity -->
     <?php
         $monthlyOnMods = "";
         $monthlyOnRepairs = "";
         $monthlyOnTunes = "";
         $monthlyOnOther = "";
 
+        $totalMods = 0;
+        $totalRepairs = 0;
+        $totalTunes = 0;
+        $totalOther = 0;
+
         // Monthly expenses on Mods
 
-        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Mod' AND done_at >= DATE(NOW()) + INTERVAL -2 MONTH";
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Mod' AND MONTH(done_at) != MONTH(CURRENT_DATE) AND done_at >= DATE(NOW()) + INTERVAL -3 MONTH";
         $result = mysqli_query($userdb, $query);
 
         // Similar process like we used for weekly spending is used on monthly
@@ -1133,6 +1254,9 @@
             $unit = $row["unit"];
 
             $month_name = date("F", strtotime($date));
+
+            $conv = convertUnit($price, $unit);
+            $totalMods += $conv;
 
             // We can see that here we used a function for converting units
             // Instead of what we did for weekly
@@ -1189,7 +1313,7 @@
 
         // Monthly expenses on Repairs
 
-        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Repair' AND done_at >= DATE(NOW()) + INTERVAL -2 MONTH";
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Repair' AND MONTH(done_at) != MONTH(CURRENT_DATE) AND done_at >= DATE(NOW()) + INTERVAL -3 MONTH";
         $result = mysqli_query($userdb, $query);
         
         // Everything is the same for repairs
@@ -1212,6 +1336,9 @@
             $unit = $row["unit"];
 
             $month_name = date("F", strtotime($date));
+
+            $conv = convertUnit($price, $unit);
+            $totalRepairs += $conv;
 
             if($month_name == "January"){
                 $convertedPrice = convertUnit($price, $unit);
@@ -1265,7 +1392,7 @@
 
         // Monthly expenses on Tunes
 
-        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Tune' AND done_at >= DATE(NOW()) + INTERVAL -2 MONTH";
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Tune' AND MONTH(done_at) != MONTH(CURRENT_DATE) AND done_at >= DATE(NOW()) + INTERVAL -3 MONTH";
         $result = mysqli_query($userdb, $query);
         
         // Same for tunes as well
@@ -1288,6 +1415,9 @@
             $unit = $row["unit"];
 
             $month_name = date("F", strtotime($date));
+
+            $conv = convertUnit($price, $unit);
+            $totalTunes += $conv;
 
             if($month_name == "January"){
                 $convertedPrice = convertUnit($price, $unit);
@@ -1342,7 +1472,7 @@
 
         // Monthly expenses on Other
 
-        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Other' AND done_at >= DATE(NOW()) + INTERVAL -2 MONTH";
+        $query = "SELECT price, unit, done_at, repair_type FROM mods WHERE repair_type = 'Other' AND MONTH(done_at) != MONTH(CURRENT_DATE) AND done_at >= DATE(NOW()) + INTERVAL -3 MONTH";
         $result = mysqli_query($userdb, $query);
         
         // Same for spending on other stuff
@@ -1365,6 +1495,9 @@
             $unit = $row["unit"];
 
             $month_name = date("F", strtotime($date));
+
+            $conv = convertUnit($price, $unit);
+            $totalOther += $conv;
 
             if($month_name == "January"){
                 $convertedPrice = convertUnit($price, $unit);
@@ -1473,7 +1606,7 @@
         // Sort all expenses in the same fashion as we did Weekly
         // We want to show only last 3 months including the current one
 
-        for($i = 2; $i >= 0; $i--){
+        for($i = 3; $i >= 1; $i--){
             $month = date("F", strtotime($i. " months ago"));
 
             if($month == "January"){
@@ -1556,113 +1689,63 @@
         $monthlyOnOther = trim($monthlyOnOther, ",");
     ?>
 
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Links</h3>
-                <a href="">Login</a>
-                <br>
-                <a href="">About</a>
-                <br>
-                <a href="">Contact</a>
-            </div>
-            <div class="footer-column">
-                <h3>Legal Documents</h3>
-                <a href="">Terms of service</a>
-                <br>
-                <a href="">Privacy policy</a>
-                <br>
-                <a href="">Cookies policy</a>
-            </div>
-            <div class="back-to-top">
-                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
-            </div>
+    <div class="car-data-charts three-month-chart">
+        <!-- Create a canvas for three month spending report -->
+        <div class="car-data-monthly-content">
+            <h2>3-Month Services Report</h2>
             <hr>
-            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+            <div class="chart-switchers">
+                <button id="all-monthly">All</button>
+                <button id="mods-monthly">Mods</button>
+                <button id="repairs-monthly">Repairs</button>
+                <button id="tunes-monthly">Tunes</button>
+                <button id="other-monthly">Other</button>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="MonthlyExpensesByCategory" style="width: 100%; height: 500px;"></canvas>
+            </div>
+            <div class="info-numbers">
+                <hr class="info-wrapper">
+                <div class="info-content">
+                    <?php
+                        $postfix_charts = "";
 
+                        $threeMonthTotal = convertToEur($totalMods + $totalRepairs + $totalTunes + $totalOther);
+                        $totalMods = convertToEur($totalMods);
+                        $totalRepairs = convertToEur($totalRepairs);
+                        $totalTunes = convertToEur($totalTunes);
+                        $totalOther = convertToEur($totalOther);
+                    ?>
+
+                    <div class="info-column top-hr">
+                        <h1>Total</h1>
+                        <?php numberConverter($threeMonthTotal) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Mods</h1>
+                        <?php numberConverter($totalMods) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Repairs</h1>
+                        <?php numberConverter($totalRepairs) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Tunes</h1>
+                        <?php numberConverter($totalTunes) ?>
+                    </div>
+                    <div class="info-column">
+                        <h1>Other</h1>
+                        <?php numberConverter($totalOther) ?>
+                    </div>
+                </div>
+                <hr class="info-wrapper">
+            </div>
         </div>
     </div>
 
-    <!-- Code for the monthly expenses chart -->
-    <script>
-        // Get all the month names
-        var monthNames = ["January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"];
+    <div class="clear"></div>
 
-        var today = new Date();
-        var months = []
-
-        // Get last current month and 2 months before the current month and sort them in an array
-        for (i = 2; i >= 0; i--) {
-            months.push(monthNames[(today.getMonth() - i)]);
-        }
-
-        var monthly = document.getElementById('MonthlyExpensesByCategory').getContext('2d');
-
-        // Transform legend style from rectangles to circles
-        Chart.defaults.global.legend.labels.usePointStyle = true;
-
-        // Create a line chart with all the given information
-        let lineChart = new Chart(monthly, {
-            type: 'line',
-            data: {
-                labels: months,
-                datasets: [{
-                    data: [<?php echo $monthlyOnMods?>],
-                    borderColor: "#00a2ff",
-                    backgroundColor: "rgba(0, 162, 255, 0.15)",
-                    label: "Mods",
-                    fill: true
-                }, {
-                    data: [<?php echo $monthlyOnRepairs?>],
-                    borderColor: "#b300ff",
-                    backgroundColor: "rgba(179, 0, 255, 0.15)",
-                    label: "Repairs",
-                    fill: true
-                }, {
-                    data: [<?php echo $monthlyOnTunes?>],
-                    borderColor: "#ff003c",
-                    backgroundColor: "rgba(255, 0, 60, 0.15)",
-                    label: "Tunes",
-                    fill: true
-                }, {
-                    data: [<?php echo $monthlyOnOther?>],
-                    borderColor: "#00ff37",
-                    backgroundColor: "rgba(0, 255, 55, 0.15)",
-                    label: "Other",
-                    fill: true
-
-                }]
-            },
-            options: {
-                legend: {
-                    display: true, 
-                },
-                scales: {
-                    yaxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            callback: function(value, index, values){
-                                return value + ' EUR';
-                            }
-                        }
-                    }]
-                },
-                title: {
-                    display: true,
-                    text: "Spending in EUR for the last 3 Months",
-                    fontSize: 20,
-                },
-                tooltips: {
-                    callbacks: {
-                        label: (item) => `${item.yLabel} EUR`,
-                    }
-                }
-            }
-        })
-    </script>
-
-    <!-- Function for converting the units from EUR or USD to HRK -->
+<!-- Function for converting the units from EUR or USD to HRK -->
     <?php
         function convertUnit($price, $tender){
             $total = 0;
@@ -1690,21 +1773,597 @@
         }
     ?>
 
+        </div>
+    </div>
+
+    <!-- Code for the weekly expenses chart -->
     <script>
-        // Sidebar toggler
-        var mini = true;
-        function toggleSidebar() {
-            if (mini) {
-            document.getElementById("mySidebar").style.width = "200px";
-            document.getElementById("mySidebar").style.left = "-210px";
-            // document.getElementById("main").style.marginLeft = "210px";
-            this.mini = false;
-        } else {
-            document.getElementById("mySidebar").style.width = "70px";
-            document.getElementById("mySidebar").style.left = "-80px";
-            // document.getElementById("main").style.marginLeft = "80px";
-            this.mini = true;
+
+        // Format the day to our liking
+        function formatDate(date){
+        var dd = date.getDate();
+        var mm = date.getMonth()+1;
+        var yyyy = date.getFullYear();
+        if(dd<10) {dd='0'+dd}
+        if(mm<10) {mm='0'+mm}
+        date = mm+'/'+dd+'/'+yyyy;
+        return date
         }
+
+        // Get the name of the day on the given date
+        function getDayName(dateStr, locale)
+        {
+            var date = new Date(dateStr);
+            return date.toLocaleDateString(locale, { weekday: 'long' });        
+        }
+
+        // Get and insert last 7 days from the current day in the array (including the current day)
+        days = [];
+        for(var i = 6; i >= 0; i--){
+            var d = new Date();
+            d.setDate(d.getDate() - i);
+            d = formatDate(d)
+            day = getDayName(d, "EN");
+            days.push(day);
+        }
+
+        days.join(',');
+
+        var weekly = document.getElementById('WeeklyExpensesByCategory').getContext('2d');
+
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+
+        // Create a bar chart with the data gathered with the previous code
+        let chart = new Chart(weekly, {
+            type: "line",
+            data: {
+                labels: days,
+                datasets: [{
+                    data: [<?php echo $weeklyOnMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }, {
+                    data: [<?php echo $weeklyOnRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }, {
+                    data: [<?php echo $weeklyOnTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }, {
+                    data: [<?php echo $weeklyOnOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+                }]
+            },
+            options: {
+                legend: {
+                    display: false, 
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(value, index, values){
+                                return value.toFixed(0) + ' EUR';
+                            },
+                            fontColor: "rgb(245,245,245)"
+                        },
+                        gridLines: {
+                            color: "rgba(0,0,0,0)",
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            color: "rgba(0,0,0,0)",
+                        },
+                        ticks: {
+                            fontColor: "rgb(245,245,245)"
+                        }
+                    }]
+                },
+                title: {
+                    display: false,
+                    fontSize: 20,
+                },
+                toolTips: {
+                    callbacks: {
+                        label: (item) => `${item.yLabel} €`,
+                    }
+                }
+            }
+        });
+
+        document.getElementById("mods").addEventListener('click', () => {
+            chart.config.data = {
+                labels: days,
+                datasets: [{
+                    data: [<?php echo $weeklyOnMods ?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true,
+                }]
+            }
+            chart.update();
+        });
+        document.getElementById("repairs").addEventListener('click', () => {
+            chart.config.data = {
+                labels: days,
+                datasets: [{
+                    data: [<?php echo $weeklyOnRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true,
+                }]
+            }
+            chart.update();
+        });
+        document.getElementById("tunes").addEventListener('click', () => {
+            chart.config.data = {
+                labels: days,
+                datasets: [{
+                    data: [<?php echo $weeklyOnTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true,
+                }]
+            }
+            chart.update();
+        });
+        document.getElementById("other").addEventListener('click', () => {
+            chart.config.data = {
+                labels: days,
+                datasets: [{
+                    data: [<?php echo $weeklyOnOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true,
+                }]
+            }
+            chart.update();
+        });
+        document.getElementById("all").addEventListener('click', () => {
+            chart.config.data = {
+                labels: days,
+                datasets: [{
+                    data: [<?php echo $weeklyOnMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }, {
+                    data: [<?php echo $weeklyOnRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }, {
+                    data: [<?php echo $weeklyOnTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }, {
+                    data: [<?php echo $weeklyOnOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+                }]
+            }
+            chart.update();
+        });
+    </script>
+
+    <!-- Monthly chart -->
+    <script>
+        let current = new Date();
+
+        const daysInThisMonth = new Date(current.getFullYear(), current.getMonth()+1, 0).getDate();
+
+        
+        days_array = [];
+        for(let i = 1; i <= daysInThisMonth; i++){
+            days_array.push(i);
+        }
+
+        days_array.join(',');
+
+        var currentMonth = document.getElementById('CurrentMonthExpensesByCategory').getContext('2d');
+
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+
+        // Create a bar chart with the data gathered with the previous code
+        let currentMonthChart = new Chart(currentMonth, {
+            type: "line",
+            data: {
+                labels: days_array,
+                datasets: [{
+                    data: [<?php echo $monthlyMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+                }]
+            },
+            options: {
+                legend: {
+                    display: false, 
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(value, index, values){
+                                return value.toFixed(0) + ' EUR';
+                            },
+                            fontColor: "rgb(245,245,245)"
+                        },
+                        gridLines: {
+                            color: "rgba(0,0,0,0)",
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            color: "rgba(0,0,0,0)",
+                        },
+                        ticks: {
+                            fontColor: "rgb(245,245,245)"
+                        }
+                    }]
+                },
+                title: {
+                    display: false,
+                    fontSize: 20,
+                },
+                toolTips: {
+                    callbacks: {
+                        label: (item) => `${item.yLabel} €`,
+                    }
+                }
+            }
+        });
+
+        document.getElementById("mods-currentmonth").addEventListener('click', () => {
+            currentMonthChart.config.data = {
+                labels: days_array,
+                datasets: [{
+                    data: [<?php echo $monthlyMods ?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true,
+                }]
+            }
+            currentMonthChart.update();
+        });
+
+        document.getElementById("repairs-currentmonth").addEventListener('click', () => {
+            currentMonthChart.config.data = {
+                labels: days_array,
+                datasets: [{
+                    data: [<?php echo $monthlyRepairs ?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true,
+                }]
+            }
+            currentMonthChart.update();
+        });
+
+        document.getElementById("tunes-currentmonth").addEventListener('click', () => {
+            currentMonthChart.config.data = {
+                labels: days_array,
+                datasets: [{
+                    data: [<?php echo $monthlyTunes ?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true,
+                }]
+            }
+            currentMonthChart.update();
+        });
+
+        document.getElementById("other-currentmonth").addEventListener('click', () => {
+            currentMonthChart.config.data = {
+                labels: days_array,
+                datasets: [{
+                    data: [<?php echo $monthlyOther ?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true,
+                }]
+            }
+            currentMonthChart.update();
+        });
+
+        document.getElementById("all-currentmonth").addEventListener('click', () => {
+            currentMonthChart.config.data = {
+                labels: days_array,
+                datasets: [{
+                    data: [<?php echo $monthlyMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+                }]
+            }
+            currentMonthChart.update();
+        });
+    </script>
+
+    <!-- Code for the 3 month expenses chart -->
+    <script>
+        // Get all the month names
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"];
+
+        var today = new Date();
+        var months = []
+
+        // Get last current month and 2 months before the current month and sort them in an array
+        for (i = 3; i >= 1; i--) {
+            months.push(monthNames[(today.getMonth() - i)]);
+        }
+
+        var monthly = document.getElementById('MonthlyExpensesByCategory').getContext('2d');
+
+        // Transform legend style from rectangles to circles
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+
+        // Create a line chart with all the given information
+        let monthlyChart = new Chart(monthly, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    data: [<?php echo $monthlyOnMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOnRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOnTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOnOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+
+                }]
+            },
+            options: {
+                legend: {
+                    display: false, 
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                            callback: function(value, index, values){
+                                return value.toFixed(0) + ' EUR';
+                            },
+                            fontColor: "rgb(245,245,245)"
+                        },
+                        gridLines: {
+                            color: "rgba(0,0,0,0)",
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            color: "rgba(0,0,0,0)",
+                        },
+                        ticks: {
+                            fontColor: "rgb(245,245,245)"
+                        }
+                    }]
+                },
+                title: {
+                    display: false,
+                    text: "Spending in EUR for the last 3 Months",
+                    fontSize: 20,
+                },
+                toolTips: {
+                    callbacks: {
+                        label: (item) => `${item.yLabel} EUR`,
+                    }
+                }
+            }
+        });
+
+        document.getElementById("all-monthly").addEventListener('click', () => {
+            monthlyChart.config.data = {
+                labels: months,
+                datasets: [{
+                    data: [<?php echo $monthlyOnMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOnRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOnTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }, {
+                    data: [<?php echo $monthlyOnOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+
+                }]
+            }
+            monthlyChart.update()
+        });
+        document.getElementById("mods-monthly").addEventListener('click', () => {
+            monthlyChart.config.data = {
+                labels: months,
+                datasets: [{
+                    data: [<?php echo $monthlyOnMods?>],
+                    borderColor: "#ff0090",
+                    backgroundColor: "rgba(255, 0, 144, 0.2)",
+                    label: "Mods",
+                    fill: true
+                }]
+            }
+            monthlyChart.update();
+        });
+        document.getElementById("repairs-monthly").addEventListener('click', () => {
+            monthlyChart.config.data = {
+                labels: months,
+                datasets: [{
+                    data: [<?php echo $monthlyOnRepairs?>],
+                    borderColor: "#00f2ff",
+                    backgroundColor: "rgba(0, 242, 255, 0.2)",
+                    label: "Repairs",
+                    fill: true
+                }]
+            }
+            monthlyChart.update();
+        });
+        document.getElementById("tunes-monthly").addEventListener('click', () => {
+            monthlyChart.config.data = {
+                labels: months,
+                datasets: [{
+                    data: [<?php echo $monthlyOnTunes?>],
+                    borderColor: "#6fff00",
+                    backgroundColor: "rgba(111, 255, 0, 0.2)",
+                    label: "Tunes",
+                    fill: true
+                }]
+            }
+            monthlyChart.update();
+        });
+        document.getElementById("other-monthly").addEventListener('click', () => {
+            monthlyChart.config.data = {
+                labels: months,
+                datasets: [{
+                    data: [<?php echo $monthlyOnOther?>],
+                    borderColor: "#ff8400",
+                    backgroundColor: "rgba(255, 132, 0, 0.2)",
+                    label: "Other",
+                    fill: true
+                }]
+            }
+            monthlyChart.update();
+        });
+    </script>
+
+    <div class="footer">    
+        <div class="footer-content">
+            <div class="column">
+                <h3>Links</h3>
+                <a href="">Login</a>
+                <br>
+                <a href="">About</a>
+                <br>
+                <a href="">Contact</a>
+            </div>
+            <div class="column">
+                <h3>Legal Documents</h3>
+                <a href="">Terms of service</a>
+                <br>
+                <a href="">Privacy policy</a>
+                <br>
+                <a href="">Cookies policy</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#"><i class="fa-solid fa-arrow-up"></i>Back to top</a>
+            </div>
+            <hr>
+            <p>&copy; CARDATA.COM · 2021 - 2022. All rights reserved.</p>
+
+        </div>
+    </div>
+
+    <!-- Sticky mini navbar -->
+    <script>
+        // When the user scrolls the page, execute myFunction
+        window.onscroll = function() {myFunction()};
+
+        // Get the navbar
+        var navbar = document.getElementById("mini-navbar");
+
+        // Get the offset position of the navbar
+        var sticky = navbar.offsetTop;
+
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("mini-sticky")
+            } else {
+                navbar.classList.remove("mini-sticky");
+            }
         }
     </script>
 </body>

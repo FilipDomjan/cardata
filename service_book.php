@@ -19,14 +19,65 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="carmods.css">
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="service_book.css">
     <link rel="stylesheet" href="fonts/fontawesome/css/all.css">
-    <title>CarData | Mods</title>
+    <title>CarData | My Service Book</title>
 </head>
 <body>
-    <div class="navbar">    
-        <img src="img/cardata_logo_white.png" alt="logo">
+        <?php
+        function deleteActivated(){
+            echo "<div class='action-container'>";
+                echo "<div class='action-column'>";
+                echo "<h2><i class='fa-solid fa-circle-exclamation'></i>Deleting has been enabled</h2>";
+                echo "<p>To delete data simply press the row you wish to delete and it will be gone for good. To stop deleting press the delete button again or the 'CANCEL' button.</p>";
+                echo "<p>IMPORTANT: All deleted data is gone forever and cannot be returned, so delete responsibly and be careful what you click.</p>";
+                echo "</div>";
+                echo "<div class='action-column button-column'>";
+                ?> <button onclick='location.href="service_book.php?carid=<?php echo $_GET["carid"] ?>&del=0"'>CANCEL</button>
+                </div>
+        <?php
+            echo "</div>";
+
+            // Get the username for connection to database
+            // database_name = username
+            $username = htmlspecialchars($_SESSION["username"]);
+
+            // Connect to the database
+            $server = 'localhost';
+            $user = 'root';
+            $password = '';
+            $database = "$username";
+            
+            $userdb = mysqli_connect($server, $user, $password, $database);
+            
+            if($userdb -> connect_errno){
+                echo "Failed to connect to MySQL: ".$userdb -> connect_error;
+                exit();
+            }
+
+            if(isset($_GET["delid"])){
+                $delid = $_GET["delid"];
+                $delete_query = "DELETE FROM mods WHERE id = $delid";
+                $delete_result = mysqli_query($userdb, $delete_query);
+
+                $carid = $_GET["carid"];
+                
+                header("Refresh: 0; url=service_book.php?carid=$carid&del=1");
+            }
+        }
+
+        if(isset($_GET["del"])){
+            if($_GET["del"] == "1"){
+                deleteActivated();
+            }
+        }
+    ?>
+    <div class="navbar not-fixed">    
         <div class="links">
+            <img src="img/cardata_logo_white.png" alt="logo">
             <?php
                 error_reporting(0);
 
@@ -35,56 +86,90 @@
                 if($_SESSION["loggedin"] === true){
                     $username = htmlspecialchars($_SESSION["username"]);
                     echo "<a href='index.php'>Home</a>";
-                    echo "<a href='dashboard.php' class='active'>My CarData</a>";
-                    echo "<a href='#'>Contact</a>";
-                    echo "<a class='login'><i class='fa-solid fa-user'></i> $username</a>";
-                    echo "<a href='users/logout.php' class='logout'><i class='fa-solid fa-right-from-bracket'></i><span>Logout</span></a>";
+                    echo "<a href='contact.php'>Contact</a>";
+                    echo "<a href='about.php' class='about'>About</a>";
+                    echo "<a href='#' class='active'>My Cardata</a>";
+                    echo "<div class='dropdown login-dropdown'>";
+                    echo "<button class='drop-btn login-btn'><i class='fa-solid fa-user'></i><i class='fa-solid fa-caret-down'></i></button>";
+                    echo "<div class='dropdown-content login-dropdown-content'>";
+                    echo "<div class='connection-status'>";
+                    echo "<p class='cs-user'>$username</p>";
+                    echo "<p class='cs-connected'><i class='fa-solid fa-circle'></i>Connected</p>";
+                    echo "</div>";
+                    echo "<hr>";
+                    echo "<a href='users/logout.php' class='logout'>Logout <i class='fa-solid fa-right-from-bracket'></i></a>"; 
+                    echo "</div>";
+                    echo "</div>";
                 }
                 // If not show original items
                 else{
-                    echo "<a class='active'>Home</a>";
-                    echo "<a href='#'>Contact</a>";
-                    echo "<a href='users/login.php'>Login</a>";
+                    echo "<a href='#' class='active'>Home</a>";
+                    echo "<a href='contact.php'>Contact</a>";
+                    echo "<a href='about.php' class='about'>About</a>";
+                    echo "<a href='users/register.php' class='login-links reg-link'>Register</a>";
+                    echo "<a href='users/login.php' class='login-links log-link'>Sign In</a>";
                 }
             ?>
         </div>
     </div>
 
-    <!-- Main container -->
-    <div id="main">
-        <div class="page-name">
-            <h3 class="page-name-text">Car Mods</h3>
-            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Car Mods</a></p>
-            <div class="search">
-                <form action="" method="POST">
-                    <div class="search-items">
-                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                        <input type="text" name="search-table" id="search" placeholder="Search table">
-                    </div>
-                    <div class="search-items">
-                        <?php
-                            if(isset($_POST["search-table"])){
-                                if(strlen($_POST["search-table"]) > 0){
-                                    echo "<input type='submit' name='submit' id='submit' value='Reset'>";
-                                }
-                                else{
-                                    null;
-                                }
-                            }
-                        ?>
-                    </div>
-                </form>
+    <!-- Mini navbar, only present in My Cardata sections -->
+    <div id="mini-navbar">
+        <div class="mini-links">
+            <div class="dropdown-mini mini-search">
+                <div class="search">
+                    <form action="" method="POST" autocomplete="off">
+                        <div class="search-items">
+                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <input type="text" name="search-table" id="search" placeholder="Search table" oninput=getSearchValue()>
+                        </div>
+                        <div class="search-items">
+                            <?php
+                                // if(isset($_POST["search-table"])){
+                                //     if(strlen($_POST["search-table"]) > 0){
+                                //         echo "<input type='submit' name='submit' id='submit' value='Reset'>";
+                                //     }
+                                //     else{
+                                //         null;
+                                //     }
+                                // }
+                            ?>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='dashboard.php'">Dashboard</button>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='my_cars.php'">My Cars</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_car.php">Add a car</a>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn active-btn">Service Book</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_service.php">Add to Service Book</a>
+                </div>
+            </div>
+            <div class="dropdown-mini">
+                <button class="drop-btn" onclick="location.href='gas_data.php'">Gas Data</button>
+                <div class="dropdown-mini-content">
+                    <a href="add_gas.php">Add to Gas Data</a>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Main container -->
+    <div id="main">
         <div class="clear"></div>
-        <nav class="sidebar" id="mySidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
-            <div class="sidebar-items">
-                <a href="dashboard.php"><i class="fa-solid fa-gauge-simple"></i><span>Dashboard</span></a>
-                <a href="mycars.php?"><i class="fa-solid fa-car"></i><span>My Cars</span></a>
-                <a href="#"><i class="fa-solid fa-screwdriver-wrench"></i><span>Car Mods</span></a>
-                <a href="addcar.php"><i class="fa-solid fa-circle-plus"></i><span>Add a car</span></a>
-            </div>
-        </nav>
+        <div class="page-name">
+            <!-- <h3 class="page-name-text">Service Book</h3>
+            <p class="page-name-text"><a href="index.php"><i class="fa-solid fa-house"></i></a> <span>-</span> <a href="#">My CarData</a> <span>-</span> <a href="#">Service Book</a></p> -->
+        </div>
+        <div class="clear"></div>
         <!-- Car selector for sorting table -->
         <div class="table">
             <div class="table-tools">
@@ -122,7 +207,7 @@
                                 // If there are cars detected show them in the selector
                                 else{
                                     // First option is All cars which sets the carid to 0 and shows all cars
-                                    echo "<option value='carmods.php?carid=0' selected>All cars</option>";
+                                    echo "<option value='service_book.php?carid=0' selected>All cars</option>";
                                     while($row = mysqli_fetch_assoc($result)){
                                         $carManuf = $row["manufacturer"];
                                         $carModel = $row["model"];
@@ -136,10 +221,10 @@
         
         
                                         if($carid == $pageID){
-                                            echo "<option value='carmods.php?carid=$carid' selected>$year $carManuf $carModel</option>";
+                                            echo "<option value='service_book.php?carid=$carid' selected>$year $carManuf $carModel</option>";
                                         }
                                         else{
-                                            echo "<option value='carmods.php?carid=$carid'>$year $carManuf $carModel</option>";
+                                            echo "<option value='service_book.php?carid=$carid'>$year $carManuf $carModel</option>";
                                         }
                                     }
                                 }
@@ -152,8 +237,8 @@
                 <!-- Table editing tools: Edit information, delete data, add new data -->
                 <div class="table-editors">
                     <a id="edit-table"><i class="fa-solid fa-pen"></i></a>
-                    <a id="delete-from-table"><i class='fa-solid fa-circle-xmark'></i></a>
-                    <a href="addmod.php"><i class="fa-solid fa-gear"></i></a>
+                    <a id="delete-from-table" href="service_book.php?carid=<?php echo $_GET["carid"] ?>&del=<?php echo ($_GET["del"] === "1" ? "0" : "1") ?>"><i class='fa-solid fa-circle-xmark'></i></a>
+                    <a href="add_service.php"><i class="fa-solid fa-plus"></i></a>
                 </div>
                 <!-- Table search, partly functional -->
             </div>
@@ -161,19 +246,19 @@
             <table class="mod-table">
                 <thead>
                     <tr class="top-row">
-                        <td class='tl'><b>Car name</b></td>
-                        <td><b>Work type</b></td>
-                        <td><b>Description</b></td>
-                        <td><b>Milage</b></td>
-                        <td><b>Price</b></td>
-                        <td class='tr'><b>Date</b></td>
+                        <td class='tl'>Car name</td>
+                        <td>Work type</td>
+                        <td id="table-description">Description</td>
+                        <td>Milage</td>
+                        <td>Price</td>
+                        <td class='tr'>Date</td>
                     </tr>
                 </thead>
                 <?php
                     echo "<tbody>";
                     // Get the car id from the url parameter
                     $carid = $_GET["carid"];
-                    $search_value = "";
+                    $search_value = "" ;
 
                     if(isset($_POST["search-table"]))
                     {
@@ -187,6 +272,7 @@
                     // If the car id is 0, then show mods from all cars
                     if($carid == "0"){
                         
+                        // If something was written in the search bar it will check every column/row for data which contains the inputed characters
                         if(strlen($search_value) > 0){
                             $query3 = "SELECT mods.id AS mod_id, carid, repair_type, description, milage, price, unit, done_at FROM mods 
                             JOIN cars ON cars.id = mods.carid WHERE cars.manufacturer LIKE '%$search_value%' OR cars.model LIKE '%$search_value%' OR cars.model_year LIKE '%$search_value%'
@@ -229,7 +315,9 @@
                                 $milage = $row3["milage"];
                                 $price = $row3["price"];
                                 $unit = $row3["unit"];
-                                $date = $row3["done_at"];
+                                $date = date_create($row3["done_at"]);
+                                $date_formated = date_format($date, "d/m/Y");
+
                                 
                                 // Unit formatting
                                 if($unit == "eur"){
@@ -239,16 +327,23 @@
                                     $unit = strtoupper($unit);
                                 }
                                 
+                                $delete_activated = $_GET["del"];
+
                                 // Display information in table
-                                echo "<tr>";
+                                echo "<tr onclick=location.href='service_book.php?carid=$carid&del=$delete_activated&delid=$repair_id'>";
                                 echo "<td>$year $manuf $model</td>";
                                 echo "<td>$repair</td>";
-                                echo "<td>$desc</td>";
+                                if(strlen($desc) < 1){
+                                    echo "<td>N/A</td>";
+                                }
+                                else{
+                                    echo "<td>$desc</td>";
+                                }
                                 echo "<td>$milage KM</td>";
                                 echo "<td>$price $unit</td>";
-                                echo "<td>$date</td>";
+                                echo "<td>$date_formated</td>";
                                 // Button for deleting mods, currently disabled due to redesign
-                                // echo "<td><a href='carmods.php?del=$repair_id&carid=0'><i class='fa-solid fa-circle-xmark'></i></a></td>";
+                                // echo "<td><a href='service_book.php?del=$repair_id&carid=0'><i class='fa-solid fa-circle-xmark'></i></a></td>";
                                 echo "</tr>";
                             }
                         }
@@ -282,7 +377,8 @@
                                 $milage = $row["milage"];
                                 $price = $row["price"];
                                 $unit = $row["unit"];
-                                $date = $row["done_at"];
+                                $date = date_create($row["done_at"]);
+                                $date_formated = date_format($date, "d/m/Y");
     
                                 if($unit == "eur"){
                                     $unit = "€";
@@ -290,15 +386,17 @@
                                 else{
                                     $unit = strtoupper($unit);
                                 }
+
+                                $delete_activated = $_GET["del"];
     
-                                echo "<tr>";
+                                echo "<tr onclick=location.href='service_book.php?carid=$carid&del=$delete_activated&delid=$repair_id'>";
                                 echo "<td>$year $manuf $model</td>";
                                 echo "<td>$repair</td>";
                                 echo "<td>$desc</td>";
                                 echo "<td>$milage KM</td>";
                                 echo "<td>$price $unit</td>";
-                                echo "<td>$date</td>";
-                                // echo "<td><a href='carmods.php?del=$repair_id&carid=$carid'><i class='fa-solid fa-circle-xmark'></i></a></td>";
+                                echo "<td>$date_formated</td>";
+                                // echo "<td><a href='service_book.php?del=$repair_id&carid=$carid'><i class='fa-solid fa-circle-xmark'></i></a></td>";
                                 echo "</tr>";
                             }
                         }
@@ -314,10 +412,10 @@
                         
                         // This code ensures that we stay sorted once the mod has been deleted
                         if($carid == 0){
-                            header("Refresh: 0; url=carmods.php?carid=0");
+                            header("Refresh: 0; url=service_book.php?carid=0");
                         }
                         else{
-                            header("Refresh: 0; url=carmods.php?carid=$carid");
+                            header("Refresh: 0; url=service_book.php?carid=$carid");
                         }
                     }
                     else{
@@ -330,7 +428,7 @@
 
     <div class="footer">
         <div class="footer-content">
-            <div class="footer-column">
+            <div class="column">
                 <h3>Links</h3>
                 <a href="">Login</a>
                 <br>
@@ -338,7 +436,7 @@
                 <br>
                 <a href="">Contact</a>
             </div>
-            <div class="footer-column">
+            <div class="column">
                 <h3>Legal Documents</h3>
                 <a href="">Terms of service</a>
                 <br>
@@ -355,21 +453,24 @@
         </div>
     </div>
 
+    <!-- Sticky mini navbar -->
     <script>
-        // Sidebar toggler
-        var mini = true;
-        function toggleSidebar() {
-            if (mini) {
-            document.getElementById("mySidebar").style.width = "200px";
-            document.getElementById("mySidebar").style.left = "-210px";
-            // document.getElementById("main").style.marginLeft = "210px";
-            this.mini = false;
-        } else {
-            document.getElementById("mySidebar").style.width = "70px";
-            document.getElementById("mySidebar").style.left = "-80px";
-            // document.getElementById("main").style.marginLeft = "80px";
-            this.mini = true;
-        }
+        // When the user scrolls the page, execute myFunction
+        window.onscroll = function() {myFunction()};
+
+        // Get the navbar
+        var navbar = document.getElementById("mini-navbar");
+
+        // Get the offset position of the navbar
+        var sticky = navbar.offsetTop;
+
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("mini-sticky")
+            } else {
+                navbar.classList.remove("mini-sticky");
+            }
         }
     </script>
 </body>

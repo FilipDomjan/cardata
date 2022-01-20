@@ -1,0 +1,82 @@
+.footer {
+  background-color: rgb(20, 20, 20);
+  color: white;
+  height: 250px;
+  position: relative;
+  text-align: left;
+}
+
+.column {
+  display: inline-block;
+  vertical-align: middle;
+  min-height: 150px;
+  max-height: 150px;
+  padding: 10px 30px;
+  text-align: left;
+}
+
+.column h3 {
+  font-size: 20px;
+  color: #8a8a8a;
+}
+
+.column a {
+  color: rgb(204, 204, 204);
+  text-decoration: none;
+  font-size: 17px;
+  padding: 0;
+  margin: 0;
+  transition: all 0.2s;
+}
+
+.column a:hover {
+  color: orangered;
+}
+
+.footer-content hr {
+  border: 1px solid rgb(63, 63, 63);
+  width: 98%;
+  box-sizing: border-box;
+}
+
+.footer-content p {
+  width: 600px;
+  padding-left: 30px;
+  padding-top: 10px;
+}
+
+.back-to-top {
+  float: right;
+  padding-right: 30px;
+  padding-top: 30px;
+}
+
+.back-to-top a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.back-to-top a i {
+  padding-right: 5px;
+  position: relative;
+  bottom: 0;
+  transition: all 0.2s;
+  color: white;
+}
+
+.back-to-top a:hover {
+  color: orangered;
+}
+
+.back-to-top a:hover i {
+  color: orangered;
+  bottom: 3px;
+}
+
+.back-to-top::after {
+  clear: both;
+  content: "";
+  display: block;
+}
